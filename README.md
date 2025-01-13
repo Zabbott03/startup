@@ -26,7 +26,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Everybody has played the classic __Snake game__, where you try to grow your snake without bumping into your ever growing tail. The one thing that would make the game better is if you could play with your friends! With this app, you will be able to compete against your friends in real time! You will battle to be the longest, or you can try to take them out by having them run into you. Your scores will go onto a leaderboard with all of your friends, allowing your high score and win to be remembered, showing everyone who the best snake player is.
 
 ### Design
 
