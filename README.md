@@ -48,7 +48,7 @@ sequenceDiagram
 - ability to see high scores of yourself and others
 - ability to change the color of your snake
 - able to interact with other players with your snake as you play
-- counter with the score of all players
+- in-game counter with the score of all players
 - host can start and end game
 
 ### Technologies
@@ -58,9 +58,9 @@ I am going to use the required technologies in the following ways.
 - **HTML** - Used for the base structure of the app. Login page, leaderboard page, as well as the main game page
 - **CSS** - Will be used to style the three pages. Will include visually pleasing color choice as well as proper spacing depending on the device screen size.
 - **React** - Will be used to control the game and login and create an account. Also used to start and end the game, as well as add more players. 
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **Service** - Used to login and to retrieve position of each player's snake.
+- **DB/Login** - Will have the high score of each user in the database, displayed in the leaderboard. Also used to store the account info for each person after creating an account.
+- **WebSocket** - Position of all snakes will be broadcast to each other player in real time.
 
 ## 🚀 AWS deliverable
 
