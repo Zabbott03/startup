@@ -55,9 +55,9 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
+- **HTML** - Used for the base structure of the app. Login page, leaderboard page, as well as the main game page
+- **CSS** - Will be used to style the three pages. Will include visually pleasing color choice as well as proper spacing depending on the device screen size.
+- **React** - Will be used to control the game and login and create an account. Also used to start and end the game, as well as add more players. 
 - **Service** - Description here
 - **DB/Login** - Description here
 - **WebSocket** - Description here
