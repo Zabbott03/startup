@@ -43,9 +43,13 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- create an account with a secure login
+- ability to join a game with up to three other people
+- ability to see high scores of yourself and others
+- ability to change the color of your snake
+- able to interact with other players with your snake as you play
+- counter with the score of all players
+- host can start and end game
 
 ### Technologies
 
