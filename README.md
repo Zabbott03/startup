@@ -1,4 +1,4 @@
-# Your startup name here
+# Snake Wars
 
 [My Notes](notes.md)
 
