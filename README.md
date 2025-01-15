@@ -2,7 +2,7 @@
 
 [My Notes](notes.md)
 
-A snake game where you try to eat little "food pellets" to grow longer, while trying to not hit yourself or the walls.
+A snake game where you try to eat "food pellets" to grow longer, while trying to not hit yourself, the walls, or other players.
 
 
 > [!NOTE]
@@ -22,7 +22,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] A concise and compelling elevator pitch
 - [x] Description of key features
 - [x] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
@@ -30,9 +30,10 @@ Everybody has played the classic __Snake game__, where you try to grow your snak
 
 ### Design
 
-![Design image](placeholder.png)
+
 ![Design image](<Screenshot 2025-01-14 at 5.03.42 PM.png>)
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+This is a (very) rough sketch of what the game page and the leaderboard page will look like.
 
 
 ### Key features
