@@ -65,17 +65,17 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ## 🚀 HTML deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I created the main layout of my application using HTML.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - I created three differrent pages, one for each part of my website.
+- [x] **Proper HTML element usage** - I properly used different HTML formatting elements to construct my application.
+- [x] **Links** - I included links to each different page on my application, as well as a link to my repository.
+- [x] **Text** - I put in placeholder text for each part of my website.
+- [x] **3rd party API placeholder** - I included buttons that will in the future "communicate" with other people.
+- [ ] **Images** - I did not have a relevant image to include.
+- [x] **Login placeholder** - I have a login form on my home page.
+- [x] **DB data placeholder** - As far as I understand, same thing as the login placeholders. Users input email and password which are then saved in the DB.
+- [x] **WebSocket placeholder** - The blank canvas element will have the "snakes" inside communicating their position to the other players.
 
 ## 🚀 CSS deliverable
 
