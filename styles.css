@@ -1,0 +1,40 @@
+body {
+    margin:0;
+    padding:0;
+    font-family: "Press Start 2P", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: whitesmoke
+}
+
+header {
+    display:flex;
+    justify-content:space-between;
+    height: 7em;
+    background-color: rgb(4, 173, 4);
+    align-items: center;
+    color: whitesmoke;
+    text-shadow: 3px 3px 0 black;
+    padding-left:20px;
+}
+
+.header-bar {
+    display: flex;
+    list-style-type:none;
+    /* border:1px red solid; */
+    margin-right: 10px;
+}
+
+.header-bar li {
+    margin-right: 15px;
+    /* border:1px red solid; */
+    padding: 10px;
+
+
+}
+
+a {
+    text-decoration: none;
+    color: whitesmoke;
+    text-shadow: 2px 2px 0 black;
+}
