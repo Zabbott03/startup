@@ -9,5 +9,59 @@ main {
     text-align:center;
     width:70em;
     height: 15em;
+}
 
+/* .inputs, label, h2, .login-box {
+    border: red 1px solid;
+} */
+
+.inputs {
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+h2 {
+    margin-bottom:30px;
+}
+
+label {
+    font-size:18px;
+}
+
+input {
+    height:20px;
+}
+
+input:focus {
+    border: rgb(4, 173, 4) 2px solid;
+    border-radius: 3px;
+    outline:none;
+}
+
+button {
+    width:150px;
+    padding: 8px 5px;
+    margin-top:8px;
+    font-family: "Press Start 2P", serif;
+    font-size:15px;
+    background-color:rgb(4, 173, 4);
+    color: whitesmoke;
+    text-shadow: 1.5px 1.5px 0 black;
+    border-radius: 5px;
+}
+
+#create-btn {
+    background-color: whitesmoke;
+    color: black;
+    text-shadow:none;
+}
+
+#create-btn:hover {
+    background-color: lightgray;
+}
+
+#login-btn:hover {
+    background-color: rgb(4, 156, 4);
 }
