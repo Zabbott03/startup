@@ -15,4 +15,7 @@ Access Command: ssh -i [keypairfile] ubuntu@54.242.1.111
 
 ## HTML Notes
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Html canvas tag is very versatile and used for making simple games such as mine. However it requires JS so for now I will just do a grid fill with divs.
+The game will be 15x17 squares, total of 255.
+
+
