@@ -4,6 +4,7 @@
         <title>Snake Wars</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="styles.css"></link>
+        <link rel="stylesheet" href="play.css"></link>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P" rel="stylesheet">
@@ -18,18 +19,74 @@
             </ul>
         </header>
         <main>
-            <h4>Snake Fact: Arizona is home to 13 different species of rattlesnakes.</h4>
-            <div id="score-bar" style="display:flex;">
-                <h4 style="margin-right:20px;">Player 1: 10 points</h4>
-                <h4 style="margin-right:20px;">Player 2: 12 points</h4>
-                <h4 style="margin-right:20px;">Player 3: 6 points</h4>
-                <h4 >Player 4: 5 points  </h4>
-            </div>
-            <canvas width="400" height="350" style="border: 1px black solid;">
-            </canvas>
-            <div>
-            <button id="start-game-btn">Start Game</button>
-            <button id="end-game-btn">End Game</button>
+            <div class="container">
+                <div class="score-bar" style="display:flex;">
+                    <h4>P1: 10 points</h4>
+                    <h4>P2: 12 points</h4>
+                    <h4>P3: 6 points</h4>
+                    <h4>P4: 5 points</h4>
+                </div>
+                <div class="canvas-placeholder">
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>
+                    
+                  
+                </div>
+                <!-- <canvas width="650" height="580" style="border: 1px black solid;">
+                </canvas> -->
+                <div>
+                <button class="start-btn">Start Game</button>
+                <button class="end-btn">End Game</button>
+                </div>
             </div>
         </main>
         <footer>

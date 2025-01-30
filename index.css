@@ -41,8 +41,8 @@ input:focus {
 }
 
 button {
-    width:150px;
-    padding: 8px 5px;
+
+    padding: 8px 20px;
     margin-top:8px;
     font-family: "Press Start 2P", serif;
     font-size:15px;
