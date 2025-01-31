@@ -1,0 +1,55 @@
+body, html{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+main {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    height: 80vh;
+    width:100vw;
+    flex-direction:column;
+    align-items:center;
+}
+
+.snake-fact {
+    padding-top:20px;
+    text-align:center;
+}
+
+.leaderboard {
+    margin-bottom:35vh;
+    font-size:19px;
+    border:black 4px solid;
+    padding: 15px;
+    background-color:#aeffae;
+}
+
+th {
+    padding-bottom: 20px;
+    margin-right:15px;
+    font-size:22px;
+    border-bottom: 1px black solid;
+}
+
+td {
+    padding:20px 50px;
+    /* border: 1px red solid; */
+}
+
+.first-place {
+    color:rgb(245, 208, 1);
+    text-shadow: 2px 2px 0 black;
+}
+.second-place {
+    color:silver;
+    text-shadow: 2px 2px 0 black;
+}
+
+.third-place {
+    color:#CE8946;
+    text-shadow: 2px 2px 0 black;
+}

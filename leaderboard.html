@@ -4,6 +4,7 @@
         <title>Snake Wars</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="styles.css"></link>
+        <link rel="stylesheet" href="leaderboard.css"></link>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P" rel="stylesheet">
@@ -18,8 +19,8 @@
             </ul>
         </header>
         <main>
-            <h4>Snake Fact: Arizona is home to 13 different species of rattlesnakes.</h4>
-            <table>
+            <h4 class="snake-fact">Snake Fact: Arizona is home to 13 different species of rattlesnakes.</h4>
+            <table class="leaderboard">
                 <thead>
                 <tr>
                     <th>Rank</th>
@@ -30,16 +31,22 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>1</td>
+                    <td class="first-place">1</td>
                     <td>Player 1</td>
                     <td>86</td>
                     <td>1/21/25</td>
                 </tr>
                 <tr>
-                    <td>2</td>
+                    <td class="second-place">2</td>
                     <td>Player 2</td>
                     <td>43</td>
                     <td>1/23/25</td>
+                </tr>
+                <tr>
+                    <td class="third-place">3</td>
+                    <td>Player 3</td>
+                    <td>40</td>
+                    <td>1/25/25</td>
                 </tr>
                 </tbody>
             </table>

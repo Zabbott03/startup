@@ -2,7 +2,14 @@
     display:block;
     text-align:center;
     /* border:1px red solid;  */
-    padding-bottom:100px;
+
+}
+
+main {
+    height: 100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .score-bar {
@@ -14,29 +21,28 @@
 
 .canvas-placeholder {
     display:grid;
-    border:6px rgb(4, 146, 4) solid;
+    border:6px #049204 solid;
     border-radius:3px;
-    width:646px;
-    height:570px;
-    grid-template-columns: repeat(17,38px);
+    width:68vh;
+    height:60vh;
+    grid-template-columns: repeat(17,4vh);
     grid-template-rows:auto;
     margin: 20px auto;
     gap:0px;
 }
 
 .canvas-placeholder > div {
-    /* border:1px black solid; */
-    width:38px;
-    height:38px;
+    width:4vh;
+    height:4vh;
     line-height:0;
 }
 
 .square {
-    background:rgb(171, 218, 171);
+    background:#abdaab;
 }
 
 .square:nth-child(odd) {
-    background:rgb(152, 208, 152);
+    background:#98d098;
   }
 
 h4 {
@@ -50,7 +56,7 @@ button {
     margin-top:8px;
     font-family: "Press Start 2P", serif;
     font-size:15px;
-    background-color:rgb(4, 173, 4);
+    background-color:#04ad04;
     color: whitesmoke;
     text-shadow: 1.5px 1.5px 0 black;
     border-radius: 5px;
@@ -58,15 +64,13 @@ button {
 }
 
 .end-btn {
-    background-color: rgb(236, 41, 41);
-    /* color: black; */
-
+    background-color: #ec2929;
 }
 
 .end-btn:hover {
-    background-color: rgb(196, 33, 33);
+    background-color: #c42121;
 }
 
 .start-btn:hover {
-    background-color: rgb(4, 156, 4);
+    background-color: #049c04;
 }

@@ -3,6 +3,7 @@ main {
     justify-content:center;
     align-items:center;
     min-height: 80vh;
+    height:100vh;
 }
 
 .login-box {
@@ -10,10 +11,6 @@ main {
     width:70em;
     height: 15em;
 }
-
-/* .inputs, label, h2, .login-box {
-    border: red 1px solid;
-} */
 
 .inputs {
     display:flex;
