@@ -82,12 +82,12 @@ For this deliverable I created the main layout of my application using HTML.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [x] **Header, footer, and main content body** - I included a header, footer, and main section in my application.
+- [x] **Navigation elements** - I styled the links to each page to stand out and also change color when hovered over.
+- [x] **Responsive to window resizing** - The website looks good when resized on a computer, however on mobile it still does not work great.
+- [x] **Application elements** - I added and styled the different parts of my application including the main game canvas, the leaderboard, and the snake fact.
+- [x] **Application text content** - I used a consistent video game style font across all pages, including text shadow to make the words more visible.
+- [ ] **Application images** - I still don't have any images.
 
 ## 🚀 React part 1: Routing deliverable
 
