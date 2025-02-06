@@ -10,7 +10,8 @@
   "homepage": "https://github.com/Zabbott03/startup#readme",
   "dependencies": {
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.5"
   },
   "devDependencies": {
     "vite": "^6.0.11"
