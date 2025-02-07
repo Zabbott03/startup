@@ -91,11 +91,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ## 🚀 React part 1: Routing deliverable
 
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+For this deliverable I converted my html and css over to react using vite to bundle everything.
 
-- [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
-- [ ] **Components** - I did not complete this part of the deliverable.
-- [ ] **Router** - Routing between login and voting components.
+- [x] **Bundled using Vite** - I did this!
+- [x] **Components** - I componentized each part of the app in its own jsx file.
+- [x] **Router** - Routing between pages in the app
 
 ## 🚀 React part 2: Reactivity
 
