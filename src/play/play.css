@@ -1,8 +1,6 @@
 .container {
     display:block;
     text-align:center;
-    /* border:1px red solid;  */
-
 }
 
 main {
@@ -13,7 +11,7 @@ main {
 }
 
 .score-bar {
-    /* border:1px red solid; */
+
     display:flex;
     justify-content: center;
     font-size:13px;

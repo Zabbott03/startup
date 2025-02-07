@@ -14,7 +14,7 @@ export default function App() {
         <header>
             <h1>Snake Wars!</h1>
             <ul className="header-bar">
-                <li><NavLink to="login">Home</NavLink></li>
+                <li><NavLink to="">Home</NavLink></li>
                 <li><NavLink to="play">Play</NavLink></li>
                 <li><NavLink to="leaderboard">Leaderboard</NavLink></li>
             </ul>
