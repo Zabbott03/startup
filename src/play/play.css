@@ -18,15 +18,15 @@ main {
 }
 
 .canvas-placeholder {
-    display:grid;
+    /* display:grid; */
     border:6px #049204 solid;
     border-radius:3px;
     width:68vh;
     height:60vh;
-    grid-template-columns: repeat(17,4vh);
-    grid-template-rows:auto;
+    /* grid-template-columns: repeat(17,4vh); */
+    /* grid-template-rows:auto; */
     margin: 20px auto;
-    gap:0px;
+    /* gap:0px; */
 }
 
 .canvas-placeholder > div {
