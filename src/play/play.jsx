@@ -52,20 +52,21 @@ function Game() {
     
       player1.draw(canvas,ctx,board);
 
+      const input = new InputHandler();
 
       const interval = setInterval(() => {
         ctx.clearRect(0,0,canvas.width,canvas.height);
         drawGameBoard(canvas,ctx,board);
-        player1.update();
+        player1.update(input);
+        player1.move();
         player1.draw(canvas,ctx,board);
 
-      }, 4000);
+      }, 100);
 
       return () => clearInterval(interval);
 
     },[]);
 
-    const input = new InputHandler();
   
       return <canvas ref={canvasRef} width="643" height="567" />;
     }
