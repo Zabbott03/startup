@@ -11,23 +11,34 @@ import './play.css';
 //     return board;
 // }
 
-function Canvas() {
-    const canvasRef = useRef(null);
-    useEffect(() => {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-  
-  
-      const board = {
-        rows: 15,
-        columns: 17,
-        colors: {
-          light: '#abdaab',
-          dark: '#98d098'
-        }
-      }
-      
+class Snake {
+    constructor(x,y,color) {
+      this.x = x;
+      this.y = y;
+      this.color = color;
+      let dx = 20;
+      let dy = 0;
+    }
+    draw(canvas, ctx, board) {
       ctx.beginPath();
+      ctx.rect(
+        (this.x * canvas.width / board.columns) + 4,
+        (this.y * canvas.height / board.rows) + 4,
+        (canvas.width / board.columns) - 8,
+        (canvas.height / board.rows) - 8
+      )
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+    update(){
+      this.x += dx;
+      this.y += dy;
+    }
+  }
+
+
+function drawGameBoard(canvas,ctx,board) {
+    ctx.beginPath();
       ctx.fillStyle = board.colors.dark;
       ctx.rect(0, 0, canvas.width, canvas.height);
       ctx.fill();
@@ -47,19 +58,29 @@ function Canvas() {
         }
       }
       ctx.fill();
+}
+
+function Canvas() {
+    const canvasRef = useRef(null);
+    useEffect(() => {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
   
-      ctx.beginPath();
-      ctx.fillStyle = "blue";
-      ctx.rect(
-        (5 * canvas.width / board.columns) + 4,
-        (6 * canvas.height / board.rows) + 4,
-        (canvas.width / board.columns) - 8,
-        (canvas.height / board.rows) - 8
-      )
-      ctx.fill();
+  
+      const board = {
+        rows: 15,
+        columns: 17,
+        colors: {
+          light: '#abdaab',
+          dark: '#98d098'
+        }
+      }
+      drawGameBoard(canvas,ctx,board);
+      let x = Math.floor(Math.random() * board.columns);
+      let y = Math.floor(Math.random() * board.rows);
+      let player1 = new Snake(x,y,"blue");
+      player1.draw(canvas,ctx,board);
     },[]);
-  
-  
   
       return <canvas ref={canvasRef} width="643" height="567" />;
     }
