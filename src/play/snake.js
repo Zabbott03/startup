@@ -7,6 +7,7 @@ export class Snake {
       this.dy = 0;
       this.direction = null;
     }
+    
     draw(canvas, ctx, board) {
       ctx.beginPath();
       ctx.rect(
@@ -18,11 +19,12 @@ export class Snake {
       ctx.fillStyle = this.color;
       ctx.fill();
     }
+
     update(input){
-      if (input.keys.includes("ArrowUp")) this.direction = "up";
-      else if (input.keys.includes("ArrowDown")) this.direction = "down";
-      else if (input.keys.includes("ArrowLeft")) this.direction = "left";
-      else if (input.keys.includes("ArrowRight")) this.direction = "right";
+      if (input.currentKey === ("ArrowUp") && this.direction != "down") this.direction = "up";
+      else if (input.currentKey === ("ArrowDown") && this.direction != "up") this.direction = "down";
+      else if (input.currentKey === ("ArrowLeft") && this.direction != "right") this.direction = "left";
+      else if (input.currentKey === ("ArrowRight") && this.direction != "left") this.direction = "right";
     }
 
     move() {

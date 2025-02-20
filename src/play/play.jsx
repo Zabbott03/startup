@@ -61,7 +61,7 @@ function Game() {
         player1.move();
         player1.draw(canvas,ctx,board);
 
-      }, 100);
+      }, 150);
 
       return () => clearInterval(interval);
 
