@@ -2,39 +2,8 @@ import React from 'react';
 import { useRef, useEffect } from 'react';
 
 import './play.css';
-
-// function gameBoard() {
-//     let board = [];
-//     for (let i = 0; i < 255; i++) {
-//         board.push(<div class='square'></div>);
-//     }
-//     return board;
-// }
-
-class Snake {
-    constructor(x,y,color) {
-      this.x = x;
-      this.y = y;
-      this.color = color;
-      let dx = 20;
-      let dy = 0;
-    }
-    draw(canvas, ctx, board) {
-      ctx.beginPath();
-      ctx.rect(
-        (this.x * canvas.width / board.columns) + 4,
-        (this.y * canvas.height / board.rows) + 4,
-        (canvas.width / board.columns) - 8,
-        (canvas.height / board.rows) - 8
-      )
-      ctx.fillStyle = this.color;
-      ctx.fill();
-    }
-    update(){
-      this.x += dx;
-      this.y += dy;
-    }
-  }
+import { Snake } from "./snake";
+import { InputHandler } from "./input";
 
 
 function drawGameBoard(canvas,ctx,board) {
@@ -60,7 +29,7 @@ function drawGameBoard(canvas,ctx,board) {
       ctx.fill();
 }
 
-function Canvas() {
+function Game() {
     const canvasRef = useRef(null);
     useEffect(() => {
       const canvas = canvasRef.current;
@@ -76,15 +45,30 @@ function Canvas() {
         }
       }
       drawGameBoard(canvas,ctx,board);
-      let x = Math.floor(Math.random() * board.columns);
-      let y = Math.floor(Math.random() * board.rows);
-      let player1 = new Snake(x,y,"blue");
+
+      const x = Math.floor(Math.random() * board.columns);
+      const y = Math.floor(Math.random() * board.rows);
+      const player1 = new Snake(x,y,"blue");
+    
       player1.draw(canvas,ctx,board);
+
+
+      const interval = setInterval(() => {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        drawGameBoard(canvas,ctx,board);
+        player1.update();
+        player1.draw(canvas,ctx,board);
+
+      }, 4000);
+
+      return () => clearInterval(interval);
+
     },[]);
+
+    const input = new InputHandler();
   
       return <canvas ref={canvasRef} width="643" height="567" />;
     }
-
 
 export function Play() {
   return (
@@ -96,7 +80,7 @@ export function Play() {
                 <h4>P3: 6 points</h4>
             </div>
             <div className="canvas-placeholder">
-            <Canvas />
+            <Game />
 
             </div>
             <div>
