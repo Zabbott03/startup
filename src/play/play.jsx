@@ -29,12 +29,12 @@ function drawGameBoard(canvas,ctx,board) {
       ctx.fill();
 }
 
-function Game() {
+function Game({ isGameRunning }) {
     const canvasRef = useRef(null);
+
     useEffect(() => {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
-  
   
       const board = {
         rows: 15,
@@ -44,34 +44,46 @@ function Game() {
           dark: '#98d098'
         }
       }
+
       drawGameBoard(canvas,ctx,board);
+
 
       const x = Math.floor(Math.random() * board.columns);
       const y = Math.floor(Math.random() * board.rows);
       const player1 = new Snake(x,y,"blue");
+      
+      if (isGameRunning) {
     
       player1.draw(canvas,ctx,board);
 
       const input = new InputHandler();
-
-      const interval = setInterval(() => {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        drawGameBoard(canvas,ctx,board);
-        player1.update(input);
-        player1.move();
-        player1.draw(canvas,ctx,board);
-
-      }, 150);
+        const interval = setInterval(() => {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            drawGameBoard(canvas,ctx,board);
+            player1.update(input);
+            player1.move();
+            player1.draw(canvas,ctx,board);
+        
+        }, 150);
 
       return () => clearInterval(interval);
-
-    },[]);
+    }
+    },[isGameRunning]);
+    
 
   
-      return <canvas ref={canvasRef} width="643" height="567" />;
-    }
+    return <canvas ref={canvasRef} width="643" height="567" />;
+}
+
 
 export function Play() {
+    const [isGameRunning, setIsGameRunning] = React.useState(false);
+    const startGame = () => {
+        setIsGameRunning(true);
+    }
+    const endGame = () => {
+        setIsGameRunning(false);
+    }
   return (
     <main>
         <div className="container">
@@ -81,12 +93,12 @@ export function Play() {
                 <h4>P3: 6 points</h4>
             </div>
             <div className="canvas-placeholder">
-            <Game />
+            <Game isGameRunning={isGameRunning}/>
 
             </div>
             <div>
-            <button className="start-btn">Start Game</button>
-            <button className="end-btn">End Game</button>
+            <button className="start-btn" onClick={startGame}>Start Game</button>
+            <button className="end-btn" onClick={endGame}>End Game</button>
             </div>
         </div>
     </main>);
