@@ -72,3 +72,8 @@ button {
 .start-btn:hover {
     background-color: #049c04;
 }
+
+.game-over {
+    /* padding-top: 10px; */
+    padding-bottom:15px;
+}

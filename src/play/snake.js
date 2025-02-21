@@ -3,10 +3,10 @@ export class Snake {
       this.x = x;
       this.y = y;
       this.color = color;
-      this.dx = 0;
-      this.dy = 0;
-      this.direction = null;
+      this.direction = "right";
       this.body = [{ x, y }];
+      this.positions = new Set();
+      this.positions.add(`${x},${y}`);
     }
     
     draw(canvas, ctx, board) {
@@ -29,17 +29,44 @@ export class Snake {
     }
 
     move() {
-      if (this.direction === "up") this.y--;
-      else if (this.direction === "down") this.y++;
-      else if (this.direction === "left") this.x--;
-      else if (this.direction === "right") this.x++;
+      let newX = this.x;
+      let newY = this.y;
+
+      if (this.direction === "up") {
+        newY--;
+      }
+      else if (this.direction === "down") {
+        newY++;
+      }
+      else if (this.direction === "left") {
+        newX--;
+      }
+      else if (this.direction === "right") {
+        newX++;
+      }
+      
+      if (!this.checkCollision(newX,newY)) {
+        this.positions.delete(`${this.x},${this.y}`);
+        this.body.shift();
+        this.x = newX;
+        this.y = newY;
+        this.body.push({ x: this.x, y: this.y });
+        this.positions.add(`${this.x},${this.y}`);
+      } else {
+        return true;
+      }
+      
     }
 
     grow() {
 
     }
 
-    eat() {
-      
+    checkCollision(x, y) {
+
+      const outOfBounds = x < 0 || x >= 17 || y < 0 || y >= 15;
+      return this.positions.has(`${x},${y}`) || outOfBounds;
+
     }
+
   }

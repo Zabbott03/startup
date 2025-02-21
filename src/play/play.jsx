@@ -31,7 +31,7 @@ function drawGameBoard(canvas,ctx,board) {
       ctx.fill();
 }
 
-function Game({ isGameRunning }) {
+function Game({ isGameRunning, setHasGameOver, hasGameOver }) {
     const canvasRef = useRef(null);
     const [fruit, setFruit] = React.useState(null);
 
@@ -50,34 +50,37 @@ function Game({ isGameRunning }) {
 
       drawGameBoard(canvas,ctx,board);
 
-
-      const x = Math.floor(Math.random() * board.columns);
-      const y = Math.floor(Math.random() * board.rows);
+      const x = 3;
+      const y = 7;
       const player1 = new Snake(x,y,"blue");
 
       if (!fruit) {
-        setFruit(generateFruit(board));
+        setFruit(generateFruit(board, player1));
       }
       
-      if (isGameRunning) {
-      player1.draw(canvas,ctx,board);
-      drawFruit(canvas,ctx,board,fruit);
-
-
-      const input = new InputHandler();
-        const interval = setInterval(() => {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            drawGameBoard(canvas,ctx,board);
-            player1.update(input);
-            player1.move();
-            player1.draw(canvas,ctx,board);
-
-            drawFruit(canvas,ctx,board,fruit);
+      if (isGameRunning && !hasGameOver) {
         
-        }, 150);
+        player1.draw(canvas,ctx,board);
+        drawFruit(canvas,ctx,board,fruit);
 
-      return () => clearInterval(interval);
-    }
+        const input = new InputHandler();
+
+          const interval = setInterval(() => {
+
+              ctx.clearRect(0,0,canvas.width,canvas.height);
+              drawGameBoard(canvas,ctx,board);
+              player1.update(input);
+              
+              if (player1.move()) {
+                setHasGameOver(true);
+              }
+              drawFruit(canvas,ctx,board,fruit);
+              player1.draw(canvas,ctx,board);
+          
+          }, 150);
+
+        return () => clearInterval(interval);
+      }
     },[isGameRunning]);
     
 
@@ -88,11 +91,14 @@ function Game({ isGameRunning }) {
 
 export function Play() {
     const [isGameRunning, setIsGameRunning] = React.useState(false);
+    const [hasGameOver, setHasGameOver] = React.useState(false);
     const startGame = () => {
         setIsGameRunning(true);
+        setHasGameOver(false);
     }
-    const endGame = () => {
+    const resetGame = () => {
         setIsGameRunning(false);
+        setHasGameOver(false);
     }
   return (
     <main>
@@ -103,12 +109,14 @@ export function Play() {
                 <h4>P3: 6 points</h4>
             </div>
             <div className="canvas-placeholder">
-            <Game isGameRunning={isGameRunning}/>
+            <Game isGameRunning={isGameRunning} setHasGameOver={setHasGameOver} hasGameOver={hasGameOver}/>
 
             </div>
+            {hasGameOver && <div className="game-over">Game Over!</div>}
+
             <div>
             <button className="start-btn" onClick={startGame}>Start Game</button>
-            <button className="end-btn" onClick={endGame}>End Game</button>
+            <button className="end-btn" onClick={resetGame}>Reset</button>
             </div>
         </div>
     </main>);
