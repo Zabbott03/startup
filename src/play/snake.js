@@ -6,6 +6,7 @@ export class Snake {
       this.dx = 0;
       this.dy = 0;
       this.direction = null;
+      this.body = [{ x, y }];
     }
     
     draw(canvas, ctx, board) {
@@ -32,5 +33,13 @@ export class Snake {
       else if (this.direction === "down") this.y++;
       else if (this.direction === "left") this.x--;
       else if (this.direction === "right") this.x++;
+    }
+
+    grow() {
+
+    }
+
+    eat() {
+      
     }
   }

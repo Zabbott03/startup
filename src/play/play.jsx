@@ -4,6 +4,8 @@ import { useRef, useEffect } from 'react';
 import './play.css';
 import { Snake } from "./snake";
 import { InputHandler } from "./input";
+import { drawFruit } from "./food";
+import { generateFruit } from "./food";
 
 
 function drawGameBoard(canvas,ctx,board) {
@@ -31,11 +33,12 @@ function drawGameBoard(canvas,ctx,board) {
 
 function Game({ isGameRunning }) {
     const canvasRef = useRef(null);
+    const [fruit, setFruit] = React.useState(null);
 
     useEffect(() => {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
-  
+
       const board = {
         rows: 15,
         columns: 17,
@@ -51,10 +54,15 @@ function Game({ isGameRunning }) {
       const x = Math.floor(Math.random() * board.columns);
       const y = Math.floor(Math.random() * board.rows);
       const player1 = new Snake(x,y,"blue");
+
+      if (!fruit) {
+        setFruit(generateFruit(board));
+      }
       
       if (isGameRunning) {
-    
       player1.draw(canvas,ctx,board);
+      drawFruit(canvas,ctx,board,fruit);
+
 
       const input = new InputHandler();
         const interval = setInterval(() => {
@@ -63,6 +71,8 @@ function Game({ isGameRunning }) {
             player1.update(input);
             player1.move();
             player1.draw(canvas,ctx,board);
+
+            drawFruit(canvas,ctx,board,fruit);
         
         }, 150);
 
