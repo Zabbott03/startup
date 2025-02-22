@@ -31,36 +31,47 @@ function drawGameBoard(canvas,ctx,board) {
       ctx.fill();
 }
 
+
+
 function Game({ isGameRunning, setHasGameOver, hasGameOver }) {
     const canvasRef = useRef(null);
     const [fruit, setFruit] = React.useState(null);
+    const [isEaten, setIsEaten] = React.useState(false)
+    const board = {
+      rows: 15,
+      columns: 17,
+      colors: {
+        light: '#abdaab',
+        dark: '#98d098'
+      }
+    }
 
     useEffect(() => {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
 
-      const board = {
-        rows: 15,
-        columns: 17,
-        colors: {
-          light: '#abdaab',
-          dark: '#98d098'
-        }
-      }
-
       drawGameBoard(canvas,ctx,board);
 
+      
+      // const x2 = 13;
+      // const y2 = 7;
       const x = 3;
       const y = 7;
-      const player1 = new Snake(x,y,"blue");
+      const player1 = new Snake(x,y,"blue")
+
+      // const player2 = new Snake(x2,y2,"orange");
+
 
       if (!fruit) {
         setFruit(generateFruit(board, player1));
       }
+
+      let localFruit = fruit;
       
       if (isGameRunning && !hasGameOver) {
         
         player1.draw(canvas,ctx,board);
+        // player2.draw(canvas,ctx,board);
         drawFruit(canvas,ctx,board,fruit);
 
         const input = new InputHandler();
@@ -70,18 +81,32 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver }) {
               ctx.clearRect(0,0,canvas.width,canvas.height);
               drawGameBoard(canvas,ctx,board);
               player1.update(input);
-              
+              // player2.update2(input);
+
               if (player1.move()) {
                 setHasGameOver(true);
               }
-              drawFruit(canvas,ctx,board,fruit);
+
+              if (player1.checkCollision(localFruit.x,localFruit.y)) {
+                localFruit = generateFruit(board,player1);
+                setIsEaten(true);
+                setFruit(generateFruit(board,player1));
+                player1.grow();
+              }
+
+
+              // if ((player2.move())) {
+              //   setHasGameOver(true);
+              // }
+              drawFruit(canvas,ctx,board,localFruit);
               player1.draw(canvas,ctx,board);
+              // player2.draw(canvas,ctx,board);
           
           }, 150);
 
         return () => clearInterval(interval);
       }
-    },[isGameRunning]);
+    },[isGameRunning, hasGameOver]);
     
 
   

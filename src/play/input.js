@@ -6,6 +6,10 @@ export class InputHandler {
                 e.key === "ArrowDown" ||
                 e.key === "ArrowLeft" ||
                 e.key === "ArrowRight"
+                // e.key === "w" ||
+                // e.key === "a" ||
+                // e.key === "s" ||
+                // e.key === "d"
             )) 
             this.currentKey = e.key;
         })
