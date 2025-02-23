@@ -7,19 +7,21 @@ export class Snake {
       this.body = [{ x, y }];
       this.positions = new Set();
       this.positions.add(`${x},${y}`);
-      this.lastTail = null;
+      this.shouldGrow = false;
     }
     
     draw(canvas, ctx, board) {
-      ctx.beginPath();
-      ctx.rect(
-        (this.x * canvas.width / board.columns) + 4,
-        (this.y * canvas.height / board.rows) + 4,
-        (canvas.width / board.columns) - 8,
-        (canvas.height / board.rows) - 8
-      )
-      ctx.fillStyle = this.color;
-      ctx.fill();
+      this.body.forEach(segment => {
+        ctx.beginPath();
+        ctx.rect(
+          (segment.x * canvas.width / board.columns) + 4,
+          (segment.y * canvas.height / board.rows) + 4,
+          (canvas.width / board.columns) - 8,
+          (canvas.height / board.rows) - 8
+        )
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      })
     }
 
     update(input){
@@ -54,27 +56,36 @@ export class Snake {
       }
       
       if (!this.checkCollision(newX,newY)) {
-        const tail = this.body[0];
 
-        this.positions.delete(`${this.x},${this.y}`);
-        this.body.shift();
+        if (!this.shouldGrow) {
+          const tail = this.body[this.body.length - 1];
+          this.positions.delete(`${tail.x},${tail.y}`);
+        } else {
+          this.shouldGrow = false;
+        }
+        
+
+          for (let i = this.body.length - 1; i > 0; i--) {
+            this.body[i] = { ...this.body[i - 1] };
+          }
+
+        this.body[0] = { x: newX, y: newY};
         this.x = newX;
         this.y = newY;
-        this.body.push({ x: this.x, y: this.y });
-        this.positions.add(`${this.x},${this.y}`);
+        this.positions.add(`${newX},${newY}`);
 
-        this.lastTail = tail;
-      } else {
+        
+        return false;
+      } 
+      else {
         return true;
       }
     }
 
     grow() {
-      // if (this.lastTail) {
-      //   this.body.unshift(this.lastTail);
-      //   this.positions.add(`${this.lastTail.x},${this.lastTail.y}`);
-      //   this.lastTail = null;
-      // }
+      this.shouldGrow = true;
+      const tail = this.body[this.body.length - 1];
+      this.body.push({ ...tail});
     }
 
     checkCollision(x, y) {
