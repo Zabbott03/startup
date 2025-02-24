@@ -8,6 +8,7 @@ export class Snake {
       this.positions = new Set();
       this.positions.add(`${x},${y}`);
       this.shouldGrow = false;
+      this.score = 0;
     }
     
     draw(canvas, ctx, board) {
@@ -86,6 +87,7 @@ export class Snake {
       this.shouldGrow = true;
       const tail = this.body[this.body.length - 1];
       this.body.push({ ...tail});
+      this.score += 1;
     }
 
     checkCollision(x, y) {

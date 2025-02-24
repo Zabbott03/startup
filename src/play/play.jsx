@@ -33,10 +33,11 @@ function drawGameBoard(canvas,ctx,board) {
 
 
 
-function Game({ isGameRunning, setHasGameOver, hasGameOver }) {
+function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, setPlayer1, player1 }) {
     const canvasRef = useRef(null);
     const [fruit, setFruit] = React.useState(null);
-    const [isEaten, setIsEaten] = React.useState(false)
+    const [isEaten, setIsEaten] = React.useState(false);
+    const snakeRef = useRef(null);
     const board = {
       rows: 15,
       columns: 17,
@@ -53,25 +54,29 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver }) {
       drawGameBoard(canvas,ctx,board);
 
       
-      // const x2 = 13;
-      // const y2 = 7;
       const x = 3;
       const y = 7;
-      const player1 = new Snake(x,y,"blue")
-
-      // const player2 = new Snake(x2,y2,"orange");
+      
+      if (!player1) {
+        const newSnake = new Snake(x,y,"blue");
+        setPlayer1(newSnake);
+        snakeRef.current = newSnake;
+      }
+      else {
+        snakeRef.current = player1;
+      }
 
 
       if (!fruit) {
-        setFruit(generateFruit(board, player1));
+        setFruit(generateFruit(board, snakeRef.current));
       }
 
       let localFruit = fruit;
       
       if (isGameRunning && !hasGameOver) {
         
-        player1.draw(canvas,ctx,board);
-        // player2.draw(canvas,ctx,board);
+        snakeRef.current.draw(canvas,ctx,board);
+
         drawFruit(canvas,ctx,board,fruit);
 
         const input = new InputHandler();
@@ -80,27 +85,24 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver }) {
 
               ctx.clearRect(0,0,canvas.width,canvas.height);
               drawGameBoard(canvas,ctx,board);
-              player1.update(input);
-              // player2.update2(input);
+              snakeRef.current.update(input);
 
-              if (player1.move()) {
+              if (snakeRef.current.move()) {
                 setHasGameOver(true);
               }
 
-              if (player1.checkCollision(localFruit.x,localFruit.y)) {
-                localFruit = generateFruit(board,player1);
+              if (snakeRef.current.checkCollision(localFruit.x,localFruit.y)) {
+                localFruit = generateFruit(board,snakeRef.current);
                 setIsEaten(true);
-                setFruit(generateFruit(board,player1));
-                player1.grow();
+                setFruit(generateFruit(board,snakeRef.current));
+                snakeRef.current.grow();
+                setScore(snakeRef.current.score)
+
               }
 
 
-              // if ((player2.move())) {
-              //   setHasGameOver(true);
-              // }
               drawFruit(canvas,ctx,board,localFruit);
-              player1.draw(canvas,ctx,board);
-              // player2.draw(canvas,ctx,board);
+              snakeRef.current.draw(canvas,ctx,board);
           
           }, 150);
 
@@ -117,6 +119,11 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver }) {
 export function Play() {
     const [isGameRunning, setIsGameRunning] = React.useState(false);
     const [hasGameOver, setHasGameOver] = React.useState(false);
+    const [score, setScore] = React.useState(0);
+    const [player1, setPlayer1] = React.useState(null);
+    const [player2, setPlayer2] = React.useState(null);
+    const [player3, setPlayer3] = React.useState(null);
+
     const startGame = () => {
         setIsGameRunning(true);
         setHasGameOver(false);
@@ -124,17 +131,24 @@ export function Play() {
     const resetGame = () => {
         setIsGameRunning(false);
         setHasGameOver(false);
+        setScore(0);
     }
   return (
     <main>
         <div className="container">
             <div className="score-bar">
-                <h4>P1: 11 points</h4>
-                <h4>P2: 12 points</h4>
-                <h4>P3: 6 points</h4>
+                {player1 && <h4>P1: {score} points</h4>}
+                {player2 && <h4>P2: 12 points</h4>}
+                {player3 && <h4>P3: 6 points</h4>}
             </div>
             <div className="canvas-placeholder">
-            <Game isGameRunning={isGameRunning} setHasGameOver={setHasGameOver} hasGameOver={hasGameOver}/>
+            <Game 
+            isGameRunning={isGameRunning} 
+            setHasGameOver={setHasGameOver} 
+            hasGameOver={hasGameOver} 
+            setScore={setScore} 
+            setPlayer1={setPlayer1}
+            player1={player1}/>
 
             </div>
             {hasGameOver && <div className="game-over">Game Over!</div>}
