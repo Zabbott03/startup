@@ -4,19 +4,29 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
 import { Play } from './play/play';
 import { Leaderboard } from './leaderboard/leaderboard';
-
+import { AuthState } from "./login/authState.js";
 
 
 export default function App() {
-  return (
+
+    const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+    const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+    const [authState, setAuthState] = React.useState(currentAuthState);
+
+    return (
+
     <BrowserRouter>
     <div className="body">
         <header>
             <h1>Snake Wars!</h1>
             <ul className="header-bar">
-                <li><NavLink to="">Home</NavLink></li>
+                <li><NavLink to="">Login</NavLink></li>
+                {authState == AuthState.Authorized && 
                 <li><NavLink to="play">Play</NavLink></li>
+                }
+                {authState == AuthState.Authorized && 
                 <li><NavLink to="leaderboard">Leaderboard</NavLink></li>
+                }
             </ul>
         </header>
         <Routes>

@@ -3,9 +3,16 @@ import React from 'react';
 import './leaderboard.css';
 
 export function Leaderboard() {
+    
+    const [snakeFact, setSnakeFact] = React.useState("Retrieving snake fact...")
+
+    React.useEffect(() => {
+        setSnakeFact("Snake Fact: Arizona is home to 13 different species of rattlesnakes.")
+    })
+
   return (
     <main>
-        <h4 className="snake-fact">Snake Fact: Arizona is home to 13 different species of rattlesnakes.</h4>
+        <h4 className="snake-fact">{snakeFact}</h4>
         <table className="leaderboard">
         <thead>
         <tr>
