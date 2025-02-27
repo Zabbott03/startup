@@ -36,7 +36,6 @@ function drawGameBoard(canvas,ctx,board) {
 function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, setPlayer1, player1 }) {
     const canvasRef = useRef(null);
     const [fruit, setFruit] = React.useState(null);
-    const [isEaten, setIsEaten] = React.useState(false);
     const snakeRef = useRef(null);
     const board = {
       rows: 15,
@@ -85,6 +84,7 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, setPlayer1
 
               ctx.clearRect(0,0,canvas.width,canvas.height);
               drawGameBoard(canvas,ctx,board);
+              
               snakeRef.current.update(input);
 
               if (snakeRef.current.move()) {
@@ -93,16 +93,15 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, setPlayer1
 
               if (snakeRef.current.checkCollision(localFruit.x,localFruit.y)) {
                 localFruit = generateFruit(board,snakeRef.current);
-                setIsEaten(true);
                 setFruit(generateFruit(board,snakeRef.current));
                 snakeRef.current.grow();
                 setScore(snakeRef.current.score)
 
               }
 
+              snakeRef.current.draw(canvas,ctx,board);
 
               drawFruit(canvas,ctx,board,localFruit);
-              snakeRef.current.draw(canvas,ctx,board);
           
           }, 150);
 
@@ -116,7 +115,7 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, setPlayer1
 }
 
 
-export function Play() {
+export function Play({userName}) {
     const [isGameRunning, setIsGameRunning] = React.useState(false);
     const [hasGameOver, setHasGameOver] = React.useState(false);
     const [score, setScore] = React.useState(0);
@@ -132,12 +131,13 @@ export function Play() {
         setIsGameRunning(false);
         setHasGameOver(false);
         setScore(0);
+        setPlayer1(null);
     }
   return (
     <main>
         <div className="container">
             <div className="score-bar">
-                {player1 && <h4>P1: {score} points</h4>}
+                {player1 && <h4>{userName}: {score} points</h4>}
                 {player2 && <h4>P2: 12 points</h4>}
                 {player3 && <h4>P3: 6 points</h4>}
             </div>
@@ -155,7 +155,7 @@ export function Play() {
 
             <div>
             <button className="start-btn" onClick={startGame}>Start Game</button>
-            <button className="end-btn" onClick={resetGame}>Reset</button>
+            <button className="end-btn" onClick={resetGame} disabled={!hasGameOver}>Reset</button>
             </div>
         </div>
     </main>);

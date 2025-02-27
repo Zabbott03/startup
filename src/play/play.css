@@ -4,7 +4,7 @@
 }
 
 main {
-    height: 100vh;
+    height: calc(100vh - 15vh);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -49,7 +49,6 @@ h4 {
 }
 
 button {
-
     padding: 8px 20px;
     margin-top:8px;
     font-family: "Press Start 2P", serif;

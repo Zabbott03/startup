@@ -21,17 +21,24 @@ export default function App() {
             <h1>Snake Wars!</h1>
             <ul className="header-bar">
                 <li><NavLink to="">Login</NavLink></li>
-                {authState == AuthState.Authorized && 
+                {authState == AuthState.Authenticated && 
                 <li><NavLink to="play">Play</NavLink></li>
                 }
-                {authState == AuthState.Authorized && 
+                {authState == AuthState.Authenticated && 
                 <li><NavLink to="leaderboard">Leaderboard</NavLink></li>
                 }
             </ul>
         </header>
         <Routes>
-        <Route path='/' element={<Login />} exact />
-        <Route path='/play' element={<Play />} />
+        <Route path='/' element={<Login 
+        userName={userName}
+        authState={authState}
+        onAuthChange={(userName, authState) => {
+          setAuthState(authState);
+          setUserName(userName);
+        }
+        }/>} exact />
+        <Route path='/play' element={<Play userName={userName}/>} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='*' element={<NotFound />} />
         </Routes>

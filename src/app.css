@@ -7,6 +7,7 @@
     background-color: #f5f5f5;
     display:flex;
     justify-content: center;
+    height:100vh;
 }
 
 header {
@@ -15,7 +16,7 @@ header {
     width:100%;
     display:flex;
     justify-content:space-between;
-    height: 6em;
+    height: 10vh;
     background-color: #04ad04;
     align-items: center;
     padding-left:20px;
@@ -58,6 +59,7 @@ footer {
     text-shadow: 2px 2px 0 black;
     justify-content: space-between;
     border-top:2px black solid;
+    height: 5vh;
 }
 
 footer p {

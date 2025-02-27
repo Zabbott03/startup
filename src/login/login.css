@@ -2,8 +2,8 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height: 80vh;
-    height:100vh;
+
+    height:calc(100vh - 15vh);
 }
 
 .login-box {
@@ -62,3 +62,15 @@ button {
 #login-btn:hover {
     background-color: rgb(4, 156, 4);
 }
+
+#login-btn:disabled {
+    background-color: rgb(25, 136, 25);
+    color: rgb(194, 194, 194);
+    border: 2px solid rgb(81, 80, 80);
+}
+
+#create-btn:disabled {
+    background-color: rgb(227, 227, 227);
+    border: 2px solid rgb(133, 133, 133);
+}
+

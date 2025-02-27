@@ -4,18 +4,21 @@ import { useNavigate } from "react-router-dom";
 import './login.css';
 
 
-export function UnauthenticatedLogin() {
+export function UnauthenticatedLogin({ username, onLogin}) {
 
-    const [userName, setUserName] = React.useState("")
+    const [userName, setUserName] = React.useState(username)
+    const [password, setPassword] = React.useState('');
+
 
     function loginUser() {
         localStorage.setItem('userName', userName);
-        props.onLogin(userName);
+        localStorage.setItem('password', password);
+        onLogin(userName);
       }
     
     function createUser() {
-    localStorage.setItem('userName', userName);
-    props.onLogin(userName);
+        localStorage.setItem('userName', userName);
+        onLogin(userName);
     }
 
   return (
@@ -28,7 +31,9 @@ export function UnauthenticatedLogin() {
                 type="text" 
                 id="username" 
                 name="username"
-                placeholder="Snake King" />
+                placeholder="Snake King"
+                onChange={(e) => setUserName(e.target.value)}
+                />
             </div>
             <div className="inputs">
                 <label htmlFor="password">Password: </label>
@@ -36,10 +41,12 @@ export function UnauthenticatedLogin() {
                 type="password" 
                 id="password" 
                 name="password"
-                placeholder="1l0v3snak3s" />
+                placeholder="1l0v3snak3s" 
+                onChange={(e) => setPassword(e.target.value)}
+                />
             </div>
-            <button id="login-btn">Login</button>
-            <button id="create-btn">Create</button>
+            <button type="button" id="login-btn" onClick={loginUser} disabled={!userName || !password}>Login</button>
+            <button type="button" id="create-btn" onClick={createUser} disabled={!userName || !password}>Create</button>
         </form>
     </>);
 }

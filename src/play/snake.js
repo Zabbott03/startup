@@ -9,7 +9,6 @@ export class Snake {
       this.positions.add(`${x},${y}`);
       this.shouldGrow = false;
       this.score = 0;
-      this.name = "";
     }
     
     draw(canvas, ctx, board) {
@@ -82,6 +81,7 @@ export class Snake {
       else {
         return true;
       }
+
     }
 
     grow() {
