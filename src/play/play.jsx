@@ -4,32 +4,12 @@ import { useRef, useEffect } from 'react';
 import './play.css';
 import { Snake } from "./snake";
 import { InputHandler } from "./input";
-import { drawFruit } from "./food";
-import { generateFruit } from "./food";
+import { drawFruit } from "./fruit";
+import { generateFruit } from "./fruit";
+import { SnakeList } from "./snakeList";
+import { drawGameBoard } from "./gameboard";
 
 
-function drawGameBoard(canvas,ctx,board) {
-    ctx.beginPath();
-      ctx.fillStyle = board.colors.dark;
-      ctx.rect(0, 0, canvas.width, canvas.height);
-      ctx.fill();
-      
-      ctx.beginPath();
-      ctx.fillStyle = board.colors.light;
-      for (let column = 0; column < board.columns; column++) {
-        for (let row = 0; row < board.rows; row++) {
-          if (row % 2 === 0 && column % 2 === 1 || row % 2 === 1 && column % 2 === 0) {
-            ctx.rect(
-              column * canvas.width / board.columns,
-              row * canvas.height / board.rows,
-              canvas.width / board.columns,
-              canvas.height / board.rows
-            );
-          }
-        }
-      }
-      ctx.fill();
-}
 
 
 
@@ -115,13 +95,18 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, setPlayer1
 }
 
 
-export function Play({userName}) {
+export function Play({userName, highScore, setHighScore}) {
     const [isGameRunning, setIsGameRunning] = React.useState(false);
     const [hasGameOver, setHasGameOver] = React.useState(false);
     const [score, setScore] = React.useState(0);
     const [player1, setPlayer1] = React.useState(null);
     const [player2, setPlayer2] = React.useState(null);
     const [player3, setPlayer3] = React.useState(null);
+
+    if (score > highScore) {
+      localStorage.setItem("highscore", JSON.stringify(score))
+      setHighScore(score)
+    }
 
     const startGame = () => {
         setIsGameRunning(true);

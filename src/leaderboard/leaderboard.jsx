@@ -2,9 +2,11 @@ import React from 'react';
 
 import './leaderboard.css';
 
-export function Leaderboard() {
-    
+export function Leaderboard({userName, highScore}) {
+
     const [snakeFact, setSnakeFact] = React.useState("Retrieving snake fact...")
+    const today = (new Date()).toLocaleDateString('en-US');
+
 
     React.useEffect(() => {
         setSnakeFact("Snake Fact: Arizona is home to 13 different species of rattlesnakes.")
@@ -25,20 +27,20 @@ export function Leaderboard() {
         <tbody>
         <tr>
             <td className="first-place">1</td>
-            <td>Player 1</td>
-            <td>86</td>
-            <td>1/21/25</td>
+            <td>{userName}</td>
+            <td>{highScore}</td>
+            <td>{today}</td>
         </tr>
         <tr>
             <td className="second-place">2</td>
             <td>Player 2</td>
-            <td>43</td>
+            <td>0</td>
             <td>1/23/25</td>
         </tr>
         <tr>
             <td className="third-place">3</td>
             <td>Player 3</td>
-            <td>40</td>
+            <td>0</td>
             <td>1/25/25</td>
         </tr>
         </tbody>

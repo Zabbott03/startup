@@ -50,8 +50,23 @@ export class SnakeList {
 
             }
         })
-        
         return collisions
     }
 
+    drawAll(canvas,ctx,board) {
+        Object.values(this.snakes).forEach(snake => {
+            snake.draw(canvas,ctx,board);
+        })
+    }
+
+    checkFruitCollisions(fruit) {
+        const collisions = [];
+        
+        Object.keys(this.snakes).forEach(playerId => {
+            if (this.snakes[playerId].checkCollision(fruit.x,fruit.y)) {
+                collisions.push(playerId);
+            }
+        })
+        return collisions;
+    }
 }

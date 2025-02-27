@@ -12,6 +12,9 @@ export default function App() {
     const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
+    const [highScore, setHighScore] = React.useState(() => {
+        const storedScore = localStorage.getItem( "highscore" );
+        return storedScore ? JSON.parse(storedScore) : 0});
 
     return (
 
@@ -38,8 +41,8 @@ export default function App() {
           setUserName(userName);
         }
         }/>} exact />
-        <Route path='/play' element={<Play userName={userName}/>} />
-        <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route path='/play' element={<Play userName={userName} highScore={highScore} setHighScore={setHighScore}/>} />
+        <Route path='/leaderboard' element={<Leaderboard userName={userName} highScore={highScore}/>} />
         <Route path='*' element={<NotFound />} />
         </Routes>
         <footer>
