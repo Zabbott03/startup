@@ -2,7 +2,6 @@ import React from 'react';
 import { useRef, useEffect } from 'react';
 
 import './play.css';
-import { Snake } from "./snake";
 import { InputHandler } from "./input";
 import { drawFruit } from "./fruit";
 import { generateFruit } from "./fruit";
@@ -10,13 +9,10 @@ import { SnakeList } from "./snakeList";
 import { drawGameBoard } from "./gameboard";
 
 
-
-
-
-function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, setPlayer1, player1 }) {
+function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, players, setPlayers }) {
     const canvasRef = useRef(null);
     const [fruit, setFruit] = React.useState(null);
-    const snakeRef = useRef(null);
+    const snakeListRef = useRef(null);
     const board = {
       rows: 15,
       columns: 17,
@@ -27,62 +23,84 @@ function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, setPlayer1
     }
 
     useEffect(() => {
+
+      if (!snakeListRef.current) {
+        snakeListRef.current = new SnakeList();
+      }
+
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
 
       drawGameBoard(canvas,ctx,board);
 
-      
-      const x = 3;
-      const y = 7;
-      
-      if (!player1) {
-        const newSnake = new Snake(x,y,"blue");
-        setPlayer1(newSnake);
-        snakeRef.current = newSnake;
-      }
-      else {
-        snakeRef.current = player1;
-      }
+      if (Object.keys(players).length === 0) {
 
+        const currentPlayers = {
+          player1: {x: 5, y: 7, color: "blue", score: 0}
+          // player2: {x: 13, y: 7, color: "red", score:0}
+        }
+
+        Object.keys(currentPlayers).forEach(playerId => {
+          const player = currentPlayers[playerId]
+          const snake = snakeListRef.current.addSnake(
+            playerId,
+            player.x,
+            player.y,
+            player.color
+          )
+        })
+        setPlayers(currentPlayers)
+      }
 
       if (!fruit) {
-        setFruit(generateFruit(board, snakeRef.current));
+        setFruit(generateFruit(board, snakeListRef.current.snakes));
       }
 
       let localFruit = fruit;
       
       if (isGameRunning && !hasGameOver) {
         
-        snakeRef.current.draw(canvas,ctx,board);
+        snakeListRef.current.drawAll(canvas,ctx,board);
 
         drawFruit(canvas,ctx,board,fruit);
 
-        const input = new InputHandler();
+        const inputs = {
+          player1: new InputHandler()
+          // player2: new InputHandler()
+        };
 
           const interval = setInterval(() => {
 
               ctx.clearRect(0,0,canvas.width,canvas.height);
               drawGameBoard(canvas,ctx,board);
               
-              snakeRef.current.update(input);
+              snakeListRef.current.updateAll(inputs);
 
-              if (snakeRef.current.move()) {
+              const collisions = snakeListRef.current.moveAll()
+
+              if (collisions.length > 0) {
                 setHasGameOver(true);
               }
 
-              if (snakeRef.current.checkCollision(localFruit.x,localFruit.y)) {
-                localFruit = generateFruit(board,snakeRef.current);
-                setFruit(generateFruit(board,snakeRef.current));
-                snakeRef.current.grow();
-                setScore(snakeRef.current.score)
+              const fruitCollisions = snakeListRef.current.checkFruitCollisions(localFruit)
 
+              if (fruitCollisions.length > 0) {
+
+                fruitCollisions.forEach(playerId => {
+                  snakeListRef.current.snakes[playerId].grow();
+                  const updatedPlayers = { ...players}
+                  updatedPlayers[playerId].score = snakeListRef.current.snakes[playerId].score;
+                  setPlayers(updatedPlayers)
+                })
+
+                localFruit = generateFruit(board, snakeListRef.current.snakes);
+                setFruit(localFruit)
               }
-
-              snakeRef.current.draw(canvas,ctx,board);
+              
+              snakeListRef.current.drawAll(canvas,ctx,board);
 
               drawFruit(canvas,ctx,board,localFruit);
-          
+              
           }, 150);
 
         return () => clearInterval(interval);
@@ -99,9 +117,7 @@ export function Play({userName, highScore, setHighScore}) {
     const [isGameRunning, setIsGameRunning] = React.useState(false);
     const [hasGameOver, setHasGameOver] = React.useState(false);
     const [score, setScore] = React.useState(0);
-    const [player1, setPlayer1] = React.useState(null);
-    const [player2, setPlayer2] = React.useState(null);
-    const [player3, setPlayer3] = React.useState(null);
+    const [players, setPlayers] = React.useState({});
 
     if (score > highScore) {
       localStorage.setItem("highscore", JSON.stringify(score))
@@ -116,15 +132,15 @@ export function Play({userName, highScore, setHighScore}) {
         setIsGameRunning(false);
         setHasGameOver(false);
         setScore(0);
-        setPlayer1(null);
+        setPlayers({});
     }
   return (
     <main>
         <div className="container">
             <div className="score-bar">
-                {player1 && <h4>{userName}: {score} points</h4>}
-                {player2 && <h4>P2: 12 points</h4>}
-                {player3 && <h4>P3: 6 points</h4>}
+                {players && <h4>{userName}: {score} points</h4>}
+                {players && <h4>P2: 12 points</h4>}
+                {/* {player3 && <h4>P3: 6 points</h4>} */}
             </div>
             <div className="canvas-placeholder">
             <Game 
@@ -132,8 +148,8 @@ export function Play({userName, highScore, setHighScore}) {
             setHasGameOver={setHasGameOver} 
             hasGameOver={hasGameOver} 
             setScore={setScore} 
-            setPlayer1={setPlayer1}
-            player1={player1}/>
+            setPlayers={setPlayers}
+            players={players}/>
 
             </div>
             {hasGameOver && <div className="game-over">Game Over!</div>}

@@ -10,11 +10,22 @@ export function drawFruit(canvas, ctx, board, fruit) {
     ctx.fill();
   }
 
-  export function generateFruit(board, snake) {
-    const x = Math.floor(Math.random() * board.columns);
-    const y = Math.floor(Math.random() * board.rows);
-    if (snake.checkCollision(x,y)) {
-        return generateFruit(board,snake);
+export function generateFruit(board, snakes) {
+  let x,y;
+  let isValidPosition = false
+
+  const occupiedPositions = new Set();
+  Object.values(snakes).forEach(snake => {
+    snake.positions.forEach(position => {
+      occupiedPositions.add(position)
+    })
+  })
+  while (!isValidPosition) {
+    x = Math.floor(Math.random() * board.columns);
+    y = Math.floor(Math.random() * board.rows);
+    if (!occupiedPositions.has(`${x},${y}`)) {
+      isValidPosition = true
     }
-    return { x, y };
   }
+  return { x, y };
+}

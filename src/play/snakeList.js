@@ -23,7 +23,7 @@ export class SnakeList {
 
         Object.keys(this.snakes).forEach(playerId => {
             const snake = this.snakes[playerId];
-            const head = {x : snake.x, y : snake.y};
+            const head = {x: snake.x, y: snake.y };
 
             let newX = head.x;
             let newY = head.y;
@@ -36,7 +36,7 @@ export class SnakeList {
             Object.keys(this.snakes).forEach(otherPlayerId => {
                 if (playerId != otherPlayerId) {
                     const otherSnake = this.snakes[otherPlayerId];
-                    if (otherSnake.positions.has(`${newX}, ${newY}`)) {
+                    if (otherSnake.positions.has(`${newX},${newY}`)) {
                         collisions.push(playerId);
                     }
                 }
