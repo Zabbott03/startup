@@ -68,11 +68,43 @@ button {
     background-color: #c42121;
 }
 
+.end-btn:disabled {
+    border: 2px solid black;
+    opacity: .5;
+    pointer-events:none;
+
+}
+
 .start-btn:hover {
     background-color: #049c04;
 }
 
+.start-btn:disabled {
+    border: 2px solid black;
+    opacity: .5;
+    pointer-events:none;
+}
+
 .game-over {
-    /* padding-top: 10px; */
-    padding-bottom:15px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    font-size:1.7em;
+}
+
+.multiplayer-label {
+    margin-right:1em;
+    font-size: .90em;
+}
+
+.multiplayer-toggle-div {
+    margin-top:1.4em;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.canvas-gameover {
+    position:relative;
 }

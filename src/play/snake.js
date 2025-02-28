@@ -30,13 +30,17 @@ export class Snake {
       else if (input.currentKey === ("ArrowDown") && this.direction != "up") this.direction = "down";
       else if (input.currentKey === ("ArrowLeft") && this.direction != "right") this.direction = "left";
       else if (input.currentKey === ("ArrowRight") && this.direction != "left") this.direction = "right";
+      else if (input.currentKey === ("w") && this.direction != "down") this.direction = "up";
+      else if (input.currentKey === ("s") && this.direction != "up") this.direction = "down";
+      else if (input.currentKey === ("a") && this.direction != "right") this.direction = "left";
+      else if (input.currentKey === ("d") && this.direction != "left") this.direction = "right";
     }
 
     // update2(input){
-    //   if (input.currentKey === ("w") && this.direction != "down") this.direction = "up";
-    //   else if (input.currentKey === ("s") && this.direction != "up") this.direction = "down";
-    //   else if (input.currentKey === ("a") && this.direction != "right") this.direction = "left";
-    //   else if (input.currentKey === ("d") && this.direction != "left") this.direction = "right";
+      // if (input.currentKey === ("w") && this.direction != "down") this.direction = "up";
+      // else if (input.currentKey === ("s") && this.direction != "up") this.direction = "down";
+      // else if (input.currentKey === ("a") && this.direction != "right") this.direction = "left";
+      // else if (input.currentKey === ("d") && this.direction != "left") this.direction = "right";
     // }
 
     move() {

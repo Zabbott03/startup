@@ -7,7 +7,7 @@ export class SnakeList {
 
     addSnake(playerId, x, y, color) {
         this.snakes[playerId] = new Snake(x, y, color);
-        return this.snakes[playerId];
+        // return this.snakes[playerId];
     }
 
     updateAll(inputs) {
@@ -36,7 +36,7 @@ export class SnakeList {
             Object.keys(this.snakes).forEach(otherPlayerId => {
                 if (playerId != otherPlayerId) {
                     const otherSnake = this.snakes[otherPlayerId];
-                    if (otherSnake.positions.has(`${newX},${newY}`)) {
+                    if (otherSnake.positions.has(`${newX},${newY}`) || (otherSnake.positions.has(`${head.x},${head.y}`))) {
                         collisions.push(playerId);
                     }
                 }

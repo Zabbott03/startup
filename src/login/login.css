@@ -64,13 +64,14 @@ button {
 }
 
 #login-btn:disabled {
-    background-color: rgb(25, 136, 25);
-    color: rgb(194, 194, 194);
-    border: 2px solid rgb(81, 80, 80);
+    border: 2px solid black;
+    opacity: .5;
+    pointer-events:none;
 }
 
 #create-btn:disabled {
-    background-color: rgb(227, 227, 227);
-    border: 2px solid rgb(133, 133, 133);
+    border: 2px solid black;
+    opacity: .5;
+    pointer-events:none;
 }
 
