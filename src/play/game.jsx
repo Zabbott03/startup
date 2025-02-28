@@ -32,7 +32,6 @@ export function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, pla
       const ctx = canvas.getContext('2d');
 
       drawGameBoard(canvas,ctx,board);
-
       if (Object.keys(players).length === 0) {
 
         const currentPlayers = {
@@ -55,11 +54,12 @@ export function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, pla
         })
         setPlayers(currentPlayers)
 
+
         if (isMultiplayer) {
         snakeListRef.current.snakes["player2"].direction = "left";
         }
-
       }
+
 
       if (!fruit) {
         setFruit(generateFruit(board, snakeListRef.current.snakes));

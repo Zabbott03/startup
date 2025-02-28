@@ -101,8 +101,10 @@ For this deliverable I converted my html and css over to react using vite to bun
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - Everything is working good! The game is functional, and I also added a local
+    multiplayer checkbox option to kinda simulate what it will be like when playing online. I used localStorage for name and score as well.
+
+- [x] **Hooks** - I used useEffect and useState to manage multiple variables across the entire application, as well as many within the game itself.
 
 ## 🚀 Service deliverable
 

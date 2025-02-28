@@ -1,6 +1,7 @@
 import React from 'react';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { useEffect } from "react";
 import { Login } from './login/login';
 import { Play } from './play/play';
 import { Leaderboard } from './leaderboard/leaderboard';
@@ -14,8 +15,22 @@ export default function App() {
     const [authState, setAuthState] = React.useState(currentAuthState);
     const [highScore, setHighScore] = React.useState(() => {
         const storedScore = localStorage.getItem( "highscore" );
-        return storedScore ? JSON.parse(storedScore) : 0});
-
+        return storedScore ? JSON.parse(storedScore) : 0}
+    );
+   
+    useEffect(() => {
+        const preventArrowScroll = (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            if (window.location.pathname.includes('/play')) {
+                e.preventDefault()
+            }}
+        };
+        window.addEventListener('keydown', preventArrowScroll)
+        return () => {
+            window.removeEventListener('keydown', preventArrowScroll)
+        };
+        }, []);
+    
     return (
 
     <BrowserRouter>
@@ -41,7 +56,12 @@ export default function App() {
           setUserName(userName);
         }
         }/>} exact />
-        <Route path='/play' element={<Play userName={userName} highScore={highScore} setHighScore={setHighScore}/>} />
+        <Route path='/play' element={
+            <Play 
+            userName={userName} 
+            highScore={highScore} 
+            setHighScore={setHighScore}
+            />} />
         <Route path='/leaderboard' element={<Leaderboard userName={userName} highScore={highScore}/>} />
         <Route path='*' element={<NotFound />} />
         </Routes>
