@@ -8,7 +8,7 @@ const app = express();
 const users = [];
 
 const recentScores = [];
-const allTimeScore = [];
+const allTimeScores = [];
 
 app.use(express.json());
 
@@ -18,32 +18,85 @@ app.use(express.static('public'));
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
-app.post('/auth/create', (req, res) => {
+app.post('/auth/create', async (req, res) => {
 
+    if (await findUser('name', req.body.username)) {
+        res.status(409).send("Username already taken");
+    } else {
+        const user = await createUser(req.body.username, req.body.password);
+        setAuthCookie(res, user);
+        users.push(user);
+    }
 })
 
-app.put('/auth/login', (req, res) => {
+app.post('/auth/login', async (req, res) => {
 
+    const user = await findUser('name', req.body.username);
+
+    if (user && await bcrypt.compare(req.body.password, user.password)) {
+        setAuthCookie(res, user);
+    } else {
+        res.status(401).send("Invalid username or password");
+    }
 })
 
-app.delete('/auth/logout', (req, res) => {
+app.delete('/auth/logout', async (req, res) => {
+
+    const user = await findUser('token', req.cookies.authCookie);
+
+    if (user) {
+        clearAuthCookie(res, user);
+    }
+
+    res.status(204).end();
 
 })
 
 app.get('/alltimescores', (req, res) => {
-
+    res.send(allTimeScores);
 })
 
-app.post('/alltimescores', (req, res) => {
+app.post('/alltimescores', async (req, res) => {
+    const user = await findUser('token', req.cookies.authCookie);
 
+    const score = {
+        name: user.name,
+        score: req.body.score,
+        date: new Date().toISOString()
+    }
+
+    allTimeScores.push(score);
+
+    allTimeScores.sort((a, b) => b.score - a.score);
+    if (allTimeScores.length > 10) {
+        allTimeScores.pop();
+    }
+    
+    res.send(allTimeScores);
 })
 
-app.get('/recentscores', (req, rest) => {
-
+app.get('/recentscores', (req, res) => {
+    res.send(recentScores);
 })
 
-app.post('/recentscores', (req, res) => {
+app.post('/recentscores', async (req, res) => {
+    const user = await findUser('token', req.cookies.authCookie);
 
+    const score = {
+        name: user.name,
+        score: req.body.score,
+        date: new Date().toISOString()
+    }
+
+    recentScores.push(score);
+
+    recentScores.sort((a, b) => b.score - a.score);
+
+    if (recentScores.length > 3) {
+        recentScores.pop();
+    }
+
+    res.send(recentScores)
 })
 
 async function findUser(field, value) {
