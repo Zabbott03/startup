@@ -46,16 +46,37 @@ app.post('/recentscores', (req, res) => {
 
 })
 
-async function createUser(username, password) {
+async function findUser(field, value) {
+    if (value) {
+        return users.find(user => user[field] === value);
+    }
+    return null;
+}
 
+async function createUser(username, password) {
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = {
+        name: username,
+        password: passwordHash,
+        token: uuid.v4()
+    }
+    users.push(user);
+
+    return user;
 }
 
 function setAuthCookie(res, user) {
-
+    res.cookie("authCookie", user.token, {
+        secure: true,
+        httpOnly: true,
+        sameSite: "strict"
+    })
 }
 
 function clearAuthCookie(res, user) {
-    
+    delete user.token;
+    res.clearCookie("authCookie")
 }
 
 app.listen(port, () => {
