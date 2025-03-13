@@ -2,6 +2,8 @@ import React from 'react';
 
 import './leaderboard.css';
 
+const API_KEY = import.meta.env.VITE_API_SNAKE_KEY;
+
 export function Leaderboard({ recentScores, allTimeScores, setRecentScores, setAllTimeScores }) {
 
     const [snakeFact, setSnakeFact] = React.useState("Retrieving snake fact...")
@@ -15,8 +17,37 @@ export function Leaderboard({ recentScores, allTimeScores, setRecentScores, setA
     }
 
 
-    React.useEffect(() => {
-        setSnakeFact("Snake Fact: Arizona is home to 13 different species of rattlesnakes.")
+    React.useEffect( () => {
+        const getSnakeFact = async () => {
+        const response = await fetch("https://api.api-ninjas.com/v1/animals?name=rattlesnake", {
+            headers: {
+                "X-Api-Key" : API_KEY
+            }
+        })
+
+        if (!response.ok) {
+            setSnakeFact("Failed to retrieve snake fact.")
+            return;
+        }
+
+        const data = await response.json();
+
+        const specificSnakes = data.filter(snake => 
+            snake.characteristics &&
+            snake.characteristics.length != undefined &&
+            snake.characteristics.length != null
+        )
+        if (specificSnakes.length > 0) {
+            const randomSnake = specificSnakes[Math.floor(Math.random() * specificSnakes.length)]
+
+            setSnakeFact(`Snake Fact: The ${randomSnake.name} grows to a length of ${randomSnake.characteristics.length}, and has the scientific name of ${randomSnake.taxonomy.scientific_name}.`)
+        }
+        else {
+            setSnakeFact("Failed to retrieve snake fact.")
+        }
+    }   
+    getSnakeFact();
+
     },[])
 
     React.useEffect(() => {
@@ -87,7 +118,7 @@ export function Leaderboard({ recentScores, allTimeScores, setRecentScores, setA
         for (const [i, score] of recentScores.entries()) {
             recentScoreRows.push(
                 <tr>
-                    <td>{i + 1}</td>
+                    {/* <td>{i + 1}</td> */}
                     <td>{score.name}</td>
                     <td>{score.score}</td>
                     <td>{score.date}</td>
@@ -110,7 +141,7 @@ export function Leaderboard({ recentScores, allTimeScores, setRecentScores, setA
             <table className="leaderboard">
                 <thead>
                 <tr>
-                    <th>Rank</th>
+                    {/* <th>Rank</th> */}
                     <th>Player</th>
                     <th>Score</th>
                     <th>Date</th>
