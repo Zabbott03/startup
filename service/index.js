@@ -23,17 +23,20 @@ apiRouter.post('/auth/create', async (req, res) => {
         res.status(409).send({error: "Username already taken"});
     } else {
         const user = await createUser(req.body.username, req.body.password);
+        user.token = uuid.v4()
         setAuthCookie(res, user);
         res.status(201).send();
     }
 })
 
 apiRouter.post('/auth/login', async (req, res) => {
-
+    console.log("login beginning");
     const user = await findUser('name', req.body.username);
 
     if (user && await bcrypt.compare(req.body.password, user.password)) {
+        user.token = uuid.v4()
         setAuthCookie(res, user);
+        console.log("set cookie again");
         res.status(200).send();
     } else {
         res.status(401).send({error: "Invalid username or password"});
@@ -46,6 +49,7 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 
     if (user) {
         clearAuthCookie(res, user);
+        // setAuthCookie(res, user);
     }
 
     res.status(204).end();
@@ -89,19 +93,23 @@ apiRouter.post('/recentscores', authenticate, async (req, res) => {
         res.status(401).send({error: "Unauthorized"});
         return;
     }
+
     const score = {
         name: user.name,
         score: req.body.score,
         date: new Date().toLocaleDateString()
     }
 
+
+    if (recentScores.length > 2) {
+        recentScores.shift();
+    }
+
     recentScores.push(score);
 
-    recentScores.sort((a, b) => b.score - a.score);
+    // recentScores.sort((a, b) => b.score - a.score);
 
-    if (recentScores.length > 3) {
-        recentScores.pop();
-    }
+    
 
     res.send(recentScores)
 })
@@ -128,7 +136,6 @@ async function createUser(username, password) {
     const user = {
         name: username,
         password: passwordHash,
-        token: uuid.v4()
     }
     users.push(user);
 

@@ -22,8 +22,8 @@ main {
 }
 
 .leaderboard {
-    margin-bottom:35vh;
-    font-size:19px;
+    margin-bottom:45vh;
+    font-size:15px;
     border:black 4px solid;
     padding: 15px;
     background-color:#aeffae;
@@ -53,4 +53,29 @@ td {
 .third-place {
     color:#CE8946;
     text-shadow: 2px 2px 0 black;
+}
+
+.scores-label{
+    font-size: .8em;
+}
+
+.outer-leaderboard {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+
+.snake-fact-toggle {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    margin-bottom:15px;
+}
+
+.toggle-box {
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }

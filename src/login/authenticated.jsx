@@ -22,7 +22,6 @@ export function AuthenticatedLogin({onLogout}) {
     <>
         <h2>Successfully Logged In!</h2>
         <form> 
-            {/* <LoginButton btnText={"Login"} destination={"./play"}/> */}
             <button id="login-btn" onClick={() => navigate("/play")} >Play</button>
             <button id="create-btn" onClick={logout}>Logout</button>
         </form>
