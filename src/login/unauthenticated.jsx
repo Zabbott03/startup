@@ -10,15 +10,46 @@ export function UnauthenticatedLogin({ username, onLogin}) {
     const [password, setPassword] = React.useState('');
 
 
-    function loginUser() {
-        localStorage.setItem('userName', userName);
-        localStorage.setItem('password', password);
-        onLogin(userName);
+    async function loginUser() {
+        console.log("login user beginning")
+
+        const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                username: userName,
+                password: password
+            })
+            })
+        if (response.status === 200) {
+            onLogin(userName);
+            localStorage.setItem('userName', userName);
+        } else {
+            const body = await response.json();
+            alert(body.error);
+        }
       }
     
-    function createUser() {
-        localStorage.setItem('userName', userName);
-        onLogin(userName);
+    async function createUser() {
+        console.log("create user beginning")
+        const response = await fetch("/api/auth/create", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: userName,
+                password: password
+            })
+        })
+        if (response.status === 201) {
+            onLogin(userName);
+            localStorage.setItem('userName', userName);
+        } else {
+            const body = await response.json();
+            alert(body.error);
+        }
+        return;
     }
 
   return (
@@ -32,6 +63,7 @@ export function UnauthenticatedLogin({ username, onLogin}) {
                 id="username" 
                 name="username"
                 placeholder="Snake King"
+                required
                 onChange={(e) => setUserName(e.target.value)}
                 />
             </div>
@@ -42,6 +74,7 @@ export function UnauthenticatedLogin({ username, onLogin}) {
                 id="password" 
                 name="password"
                 placeholder="1l0v3snak3s" 
+                required
                 onChange={(e) => setPassword(e.target.value)}
                 />
             </div>

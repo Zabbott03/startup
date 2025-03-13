@@ -6,9 +6,17 @@ export function AuthenticatedLogin({onLogout}) {
     const navigate = useNavigate()
 
     const logout = () => {
-        localStorage.removeItem("userName");
-        onLogout()
-        console.log("logged out!")
+        fetch("/api/auth/logout", {
+            method: "DELETE",
+        })
+        .catch(() => {
+            console.log("failed to logout")
+        })
+        .finally(() => {
+            localStorage.removeItem("userName");
+            onLogout()
+            console.log("logged out!")
+        })
     }
   return (
     <>

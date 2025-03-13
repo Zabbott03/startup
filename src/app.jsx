@@ -13,10 +13,12 @@ export default function App() {
     const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
-    const [highScore, setHighScore] = React.useState(() => {
-        const storedScore = localStorage.getItem( "highscore" );
-        return storedScore ? JSON.parse(storedScore) : 0}
-    );
+    const [recentScores, setRecentScores] = React.useState([]);
+    const [allTimeScores, setAllTimeScores] = React.useState([]);
+    // const [highScore, setHighScore] = React.useState(() => {
+    //     const storedScore = localStorage.getItem( "highscore" );
+    //     return storedScore ? JSON.parse(storedScore) : 0}
+    // );
    
     useEffect(() => {
         const preventArrowScroll = (e) => {
@@ -59,10 +61,18 @@ export default function App() {
         <Route path='/play' element={
             <Play 
             userName={userName} 
-            highScore={highScore} 
-            setHighScore={setHighScore}
+            setRecentScores={setRecentScores}
+            setAllTimeScores={setAllTimeScores}
+            // highScore={highScore} 
+            // setHighScore={setHighScore}
             />} />
-        <Route path='/leaderboard' element={<Leaderboard userName={userName} highScore={highScore}/>} />
+        <Route path='/leaderboard' element={
+            <Leaderboard 
+            recentScores={recentScores} 
+            allTimeScores={allTimeScores} 
+            setRecentScores={setRecentScores} 
+            setAllTimeScores={setAllTimeScores} 
+            />} />
         <Route path='*' element={<NotFound />} />
         </Routes>
         <footer>

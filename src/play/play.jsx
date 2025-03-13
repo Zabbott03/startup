@@ -3,7 +3,7 @@ import React from 'react';
 import './play.css';
 import { Game } from "./game"
 
-export function Play({userName, highScore, setHighScore}) {
+export function Play({userName, setRecentScores, setAllTimeScores}) {
 
     const [isGameRunning, setIsGameRunning] = React.useState(false);
     const [hasGameOver, setHasGameOver] = React.useState(false);
@@ -11,10 +11,41 @@ export function Play({userName, highScore, setHighScore}) {
     const [players, setPlayers] = React.useState({});
     const [isMultiplayer, setIsMultiplayer] = React.useState(false)
 
-    if (score > highScore) {
-      localStorage.setItem("highscore", JSON.stringify(score))
-      setHighScore(score)
+    // if (score > highScore) {
+    //   localStorage.setItem("highscore", JSON.stringify(score))
+    //   setHighScore(score)
+    // }
+
+    async function saveRecentScores(newScore) {
+      const response = await fetch("/api/recentScores", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          name: userName,
+          score: newScore
+        })
+      })
+      if (response.status === 200) {
+        const data = await response.json();
+        setRecentScores(data);
+      }
     }
+
+    async function saveAllTimeScores(newScore) {
+      const response = await fetch("/api/allTimeScores", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          name: userName,
+          score: newScore
+        })
+      })
+      if (response.status === 200) {
+        const data = await response.json();
+        setAllTimeScores(data);
+      }
+    }
+
 
     const startGame = () => {
         setIsGameRunning(true);
@@ -24,6 +55,8 @@ export function Play({userName, highScore, setHighScore}) {
     const resetGame = () => {
         setIsGameRunning(false);
         setHasGameOver(false);
+        saveRecentScores(score);
+        saveAllTimeScores(score);
         setScore(0);
         setPlayers({});
     }

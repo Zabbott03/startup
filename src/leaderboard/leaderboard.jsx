@@ -2,23 +2,36 @@ import React from 'react';
 
 import './leaderboard.css';
 
-export function Leaderboard({userName, highScore}) {
+export function Leaderboard({ recentScores, allTimeScores, setRecentScores, setAllTimeScores }) {
 
     const [snakeFact, setSnakeFact] = React.useState("Retrieving snake fact...")
-    const today = (new Date()).toLocaleDateString('en-US');
+
 
 
     React.useEffect(() => {
         setSnakeFact("Snake Fact: Arizona is home to 13 different species of rattlesnakes.")
-    })
+    },[])
 
-    const [recentScores, setRecentScores] = React.useState([]);
-    const [allTimeScores, setAllTimeScores] = React.useState([]);
+    React.useEffect(() => {
+        fetch("/api/recentScores")
+        .then(response => response.json())
+        .then((scores) => {
+            setRecentScores(scores);
+        })
+    },[])
+
+    React.useEffect(() => {
+        fetch("/api/allTimeScores")
+        .then(response => response.json())
+        .then((scores) => {
+            setAllTimeScores(scores);
+        })
+    },[])
 
     const recentScoreRows = []
     const allTimeScoreRows = []
 
-    if (recentScoreRows.length) {
+    if (recentScores.length) {
         for (const [i, score] of recentScores.entries()) {
             if (i == 0){
                 recentScoreRows.push(
@@ -53,7 +66,7 @@ export function Leaderboard({userName, highScore}) {
         }
     }
 
-    if (allTimeScoreRows.length) {
+    if (allTimeScores.length) {
         for (const [i, score] of allTimeScores.entries()) {
             allTimeScoreRows.push(
                 <tr>
@@ -78,7 +91,7 @@ export function Leaderboard({userName, highScore}) {
         </tr>
         </thead>
         <tbody>
-        {recentScoreRows}
+            {recentScoreRows}
         </tbody>
         </table>
         <table className="leaderboard">

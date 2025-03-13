@@ -4,43 +4,43 @@ const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const app = express();
 
-
 const users = [];
-
 const recentScores = [];
 const allTimeScores = [];
 
 app.use(express.json());
-
 app.use(cookieParser());
-
 app.use(express.static('public'));
 
-const port = process.argv.length > 2 ? process.argv[2] : 3000;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-app.post('/auth/create', async (req, res) => {
+var apiRouter = express.Router();
+app.use(`/api`, apiRouter);
+
+apiRouter.post('/auth/create', async (req, res) => {
 
     if (await findUser('name', req.body.username)) {
-        res.status(409).send("Username already taken");
+        res.status(409).send({error: "Username already taken"});
     } else {
         const user = await createUser(req.body.username, req.body.password);
         setAuthCookie(res, user);
-        users.push(user);
+        res.status(201).send();
     }
 })
 
-app.post('/auth/login', async (req, res) => {
+apiRouter.post('/auth/login', async (req, res) => {
 
     const user = await findUser('name', req.body.username);
 
     if (user && await bcrypt.compare(req.body.password, user.password)) {
         setAuthCookie(res, user);
+        res.status(200).send();
     } else {
-        res.status(401).send("Invalid username or password");
+        res.status(401).send({error: "Invalid username or password"});
     }
 })
 
-app.delete('/auth/logout', async (req, res) => {
+apiRouter.delete('/auth/logout', async (req, res) => {
 
     const user = await findUser('token', req.cookies.authCookie);
 
@@ -52,17 +52,20 @@ app.delete('/auth/logout', async (req, res) => {
 
 })
 
-app.get('/alltimescores', (req, res) => {
+apiRouter.get('/alltimescores', authenticate, (req, res) => {
     res.send(allTimeScores);
 })
 
-app.post('/alltimescores', async (req, res) => {
+apiRouter.post('/alltimescores', authenticate, async (req, res) => {
     const user = await findUser('token', req.cookies.authCookie);
-
+    if (!user) {
+        res.status(401).send({error: "Unauthorized"});
+        return;
+    }
     const score = {
         name: user.name,
         score: req.body.score,
-        date: new Date().toISOString()
+        date: new Date().toLocaleDateString()
     }
 
     allTimeScores.push(score);
@@ -72,20 +75,24 @@ app.post('/alltimescores', async (req, res) => {
         allTimeScores.pop();
     }
     
-    res.send(allTimeScores);
+    res.status(201).send(allTimeScores);
 })
 
-app.get('/recentscores', (req, res) => {
+apiRouter.get('/recentscores', authenticate, (req, res) => {
     res.send(recentScores);
 })
 
-app.post('/recentscores', async (req, res) => {
+apiRouter.post('/recentscores', authenticate, async (req, res) => {
     const user = await findUser('token', req.cookies.authCookie);
 
+    if (!user) {
+        res.status(401).send({error: "Unauthorized"});
+        return;
+    }
     const score = {
         name: user.name,
         score: req.body.score,
-        date: new Date().toISOString()
+        date: new Date().toLocaleDateString()
     }
 
     recentScores.push(score);
@@ -98,6 +105,15 @@ app.post('/recentscores', async (req, res) => {
 
     res.send(recentScores)
 })
+
+async function authenticate(req, res, next) {
+    const user = await findUser('token', req.cookies.authCookie);
+    if (user) {
+        next();
+    } else {
+        res.status(401).send({error: "Unauthorized"});
+    }
+}
 
 async function findUser(field, value) {
     if (value) {
