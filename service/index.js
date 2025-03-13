@@ -49,7 +49,6 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 
     if (user) {
         clearAuthCookie(res, user);
-        // setAuthCookie(res, user);
     }
 
     res.status(204).end();
@@ -100,19 +99,22 @@ apiRouter.post('/recentscores', authenticate, async (req, res) => {
         date: new Date().toLocaleDateString()
     }
 
-
     if (recentScores.length > 2) {
         recentScores.shift();
     }
 
     recentScores.push(score);
 
-    // recentScores.sort((a, b) => b.score - a.score);
-
-    
-
     res.send(recentScores)
 })
+
+app.use((_req, res) => {
+    res.sendFile('index.html', { root: 'public' });
+  });
+
+app.use(function (err, req, res, next) {
+    res.status(500).send({ type: err.name, message: err.message });
+});
 
 async function authenticate(req, res, next) {
     const user = await findUser('token', req.cookies.authCookie);
@@ -154,6 +156,7 @@ function clearAuthCookie(res, user) {
     delete user.token;
     res.clearCookie("authCookie")
 }
+
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

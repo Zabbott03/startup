@@ -40,7 +40,7 @@ export function Leaderboard({ recentScores, allTimeScores, setRecentScores, setA
         if (specificSnakes.length > 0) {
             const randomSnake = specificSnakes[Math.floor(Math.random() * specificSnakes.length)]
 
-            setSnakeFact(`Snake Fact: The ${randomSnake.name} grows to a length of ${randomSnake.characteristics.length}, and has the scientific name of ${randomSnake.taxonomy.scientific_name}.`)
+            setSnakeFact(`The ${randomSnake.name} grows to a length of ${randomSnake.characteristics.length}, and has the scientific name of ${randomSnake.taxonomy.scientific_name}.`)
         }
         else {
             setSnakeFact("Failed to retrieve snake fact.")
@@ -112,6 +112,12 @@ export function Leaderboard({ recentScores, allTimeScores, setRecentScores, setA
                 )
             }
         }
+    } else {
+        allTimeScoreRows.push(
+            <tr>
+                <td colSpan="4">Be the first to score!</td>
+            </tr>
+        )
     }
 
     if (recentScores.length) {
@@ -125,7 +131,14 @@ export function Leaderboard({ recentScores, allTimeScores, setRecentScores, setA
                 </tr>
             )
         }
+    } else {
+        recentScoreRows.push(
+            <tr>
+                <td colSpan="4">Be the first to score!</td>
+            </tr>
+        )
     }
+    
   return (
     <main>
         <div className="snake-fact-toggle">
