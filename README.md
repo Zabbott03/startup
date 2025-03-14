@@ -110,11 +110,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - This was done.
+- [x] **Static middleware for frontend** - This was done.
+- [x] **Calls to third party endpoints** - In my leaderboard.jsx file I call an animal facts api where I get snake information.
+- [x] **Backend service endpoints** - I created multiple backend service points to handle account creation/login as well as update the leaderboard scores.
+- [x] **Frontend calls service endpoints** - I completed this part of the deliverable, I have multiple fetch calls to the service endpoints in my login and leaderboard directories.
 
 ## 🚀 DB/Login deliverable
 
