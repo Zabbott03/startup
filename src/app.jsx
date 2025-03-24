@@ -15,10 +15,6 @@ export default function App() {
     const [authState, setAuthState] = React.useState(currentAuthState);
     const [recentScores, setRecentScores] = React.useState([]);
     const [allTimeScores, setAllTimeScores] = React.useState([]);
-    // const [highScore, setHighScore] = React.useState(() => {
-    //     const storedScore = localStorage.getItem( "highscore" );
-    //     return storedScore ? JSON.parse(storedScore) : 0}
-    // );
    
     useEffect(() => {
         const preventArrowScroll = (e) => {
