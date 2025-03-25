@@ -3,10 +3,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const app = express();
-
-const users = [];
-const recentScores = [];
-const allTimeScores = [];
+const DB = require('./database.js');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -35,6 +32,7 @@ apiRouter.post('/auth/login', async (req, res) => {
 
     if (user && await bcrypt.compare(req.body.password, user.password)) {
         user.token = uuid.v4()
+        await DB.updateUser(user);
         setAuthCookie(res, user);
         console.log("set cookie again");
         res.status(200).send();
@@ -44,18 +42,19 @@ apiRouter.post('/auth/login', async (req, res) => {
 })
 
 apiRouter.delete('/auth/logout', async (req, res) => {
-
     const user = await findUser('token', req.cookies.authCookie);
 
     if (user) {
+        delete user.token;
+        await DB.updateUser(user);
         clearAuthCookie(res, user);
     }
 
     res.status(204).end();
-
 })
 
-apiRouter.get('/alltimescores', authenticate, (req, res) => {
+apiRouter.get('/alltimescores', authenticate, async (req, res) => {
+    const allTimeScores = await DB.getAllTimeScores();
     res.send(allTimeScores);
 })
 
@@ -68,20 +67,16 @@ apiRouter.post('/alltimescores', authenticate, async (req, res) => {
     const score = {
         name: user.name,
         score: req.body.score,
-        date: new Date().toLocaleDateString()
+        date: req.body.date
     }
 
-    allTimeScores.push(score);
-
-    allTimeScores.sort((a, b) => b.score - a.score);
-    if (allTimeScores.length > 10) {
-        allTimeScores.pop();
-    }
+    await DB.addAllTimeScore(score);
     
-    res.status(201).send(allTimeScores);
+    res.status(201).send(await DB.getAllTimeScores());
 })
 
-apiRouter.get('/recentscores', authenticate, (req, res) => {
+apiRouter.get('/recentscores', authenticate, async (req, res) => {
+    const recentScores = await DB.getRecentScores();
     res.send(recentScores);
 })
 
@@ -96,16 +91,12 @@ apiRouter.post('/recentscores', authenticate, async (req, res) => {
     const score = {
         name: user.name,
         score: req.body.score,
-        date: new Date().toLocaleDateString()
+        date: req.body.date
     }
 
-    if (recentScores.length > 2) {
-        recentScores.shift();
-    }
+    await DB.addRecentScore(score);
 
-    recentScores.push(score);
-
-    res.send(recentScores)
+    res.send(await DB.getRecentScores())
 })
 
 app.use((_req, res) => {
@@ -126,10 +117,12 @@ async function authenticate(req, res, next) {
 }
 
 async function findUser(field, value) {
-    if (value) {
-        return users.find(user => user[field] === value);
-    }
-    return null;
+    if (!value) return null;
+
+    if (field === 'token') {
+        return await DB.getUserByToken(value);
+      }
+    return await DB.getUser(value);
 }
 
 async function createUser(username, password) {
@@ -139,7 +132,10 @@ async function createUser(username, password) {
         name: username,
         password: passwordHash,
     }
-    users.push(user);
+    await DB.addUser(user);
+
+    user.token = uuid.v4();
+    await DB.updateUser(user)
 
     return user;
 }

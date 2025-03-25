@@ -17,12 +17,14 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
     // }
 
     async function saveRecentScores(newScore) {
+      const date = new Date().toLocaleDateString()
       const response = await fetch("/api/recentScores", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           name: userName,
-          score: newScore
+          score: newScore,
+          date: date
         })
       })
       if (response.status === 200) {
@@ -32,12 +34,14 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
     }
 
     async function saveAllTimeScores(newScore) {
+      const date = new Date().toLocaleDateString()
       const response = await fetch("/api/allTimeScores", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           name: userName,
-          score: newScore
+          score: newScore,
+          date: date
         })
       })
       if (response.status === 200) {
