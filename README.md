@@ -120,11 +120,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **User registration** - I did this.
-- [x] **User login and logout** - I did this.
-- [x] **Stores data in MongoDB** - I did this.
-- [x] **Stores credentials in MongoDB** - I did this.
-- [x] **Restricts functionality based on authentication** - I did this.
+- [x] **User registration** - Users are able to register their account.
+- [x] **User login and logout** - Users can login and logout of their account.
+- [x] **Stores data in MongoDB** - The user's name and password are stored in MongoDB.
+- [x] **Stores credentials in MongoDB** - The user's credentials are also stored in MongoDB.
+- [x] **Restricts functionality based on authentication** - If a user is not logged in they cannot view the highscores.
 
 ## 🚀 WebSocket deliverable
 
