@@ -50,6 +50,13 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
       }
     }
 
+    React.useEffect(() => {
+      if (hasGameOver && score > 0) {
+        saveRecentScores(score);
+        saveAllTimeScores(score);
+      }
+    }, [hasGameOver, score]);
+
 
     const startGame = () => {
         setIsGameRunning(true);
@@ -59,8 +66,6 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
     const resetGame = () => {
         setIsGameRunning(false);
         setHasGameOver(false);
-        saveRecentScores(score);
-        saveAllTimeScores(score);
         setScore(0);
         setPlayers({});
     }
