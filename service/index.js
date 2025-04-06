@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const app = express();
 const DB = require('./database.js');
+const { peerProxy } = require('./peerProxy.js');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -155,6 +156,8 @@ function clearAuthCookie(res, user) {
 }
 
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+const httpServer = app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+
+peerProxy(httpServer);
