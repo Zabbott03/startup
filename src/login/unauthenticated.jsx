@@ -21,7 +21,7 @@ export function UnauthenticatedLogin({ username, onLogin}) {
                 password: password
             })
             })
-        if (response.status === 200) {
+        if (response.status === 201) {
             onLogin(userName);
             localStorage.setItem('userName', userName);
         } else {
@@ -32,6 +32,7 @@ export function UnauthenticatedLogin({ username, onLogin}) {
     
     async function createUser() {
         console.log("create user beginning")
+
         const response = await fetch("/api/auth/create", {
             method: "POST",
             headers: {
@@ -42,11 +43,13 @@ export function UnauthenticatedLogin({ username, onLogin}) {
                 password: password
             })
         })
+
         if (response.status === 201) {
             onLogin(userName);
             localStorage.setItem('userName', userName);
         } else {
             const body = await response.json();
+            console.log(body);
             alert(body.error);
         }
         return;

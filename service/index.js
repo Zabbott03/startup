@@ -16,6 +16,7 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 apiRouter.post('/auth/create', async (req, res) => {
+    console.log("Create user request:", req.body);
 
     if (await findUser('name', req.body.username)) {
         res.status(409).send({error: "Username already taken"});
@@ -26,6 +27,7 @@ apiRouter.post('/auth/create', async (req, res) => {
         setAuthCookie(res, user);
         res.status(201).send();
     }
+
 })
 
 apiRouter.post('/auth/login', async (req, res) => {
@@ -37,7 +39,7 @@ apiRouter.post('/auth/login', async (req, res) => {
         await DB.updateUser(user);
         setAuthCookie(res, user);
         console.log("set cookie again");
-        res.status(200).send();
+        res.status(201).send();
     } else {
         res.status(401).send({error: "Invalid username or password"});
     }
@@ -156,8 +158,8 @@ function clearAuthCookie(res, user) {
 }
 
 
-const httpServer = app.listen(port, () => {
+const httpService = app.listen(port, () => {
     console.log(`Listening on port ${port}`);
   });
-
-peerProxy(httpServer);
+  
+peerProxy(httpService);
