@@ -4,7 +4,6 @@ import { GameEvent, GameNotifier } from './gameNotifier';
 
 
 export function Players(props) {
-  const userName = props.userName;
 
   const [events, setEvent] = React.useState([]);
 
@@ -34,7 +33,7 @@ export function Players(props) {
 
       messageArray.push(
         <div key={i} className='event'>
-          <span className={'player-event'}>{event.from}</span>
+          <span>{event.from}</span>
           {message}
         </div>
       );
@@ -43,9 +42,6 @@ export function Players(props) {
   }
 
   return (
-    <div className='players'>
-      {/* <span className='player-name'>{userName}</span> */}
-      <div id='player-messages'>{createMessageArray()}</div>
-    </div>
+      <div>{createMessageArray()}</div>
   );
 }
