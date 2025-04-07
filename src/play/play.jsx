@@ -3,7 +3,7 @@ import React from 'react';
 import './play.css';
 import { Game } from "./game"
 import { GameEvent, GameNotifier } from './gameNotifier';
-import { Players } from "./players.jsx";
+import { Messages } from "./messages.jsx";
 
 export function Play({userName, setRecentScores, setAllTimeScores}) {
 
@@ -84,6 +84,9 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
 
   return (
     <main>
+      <div className="messages">
+        <Messages/>
+      </div>
         <div className="container">
             <div className="score-bar">
 
@@ -94,9 +97,7 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
                 {/* {player3 && <h4>P3: 6 points</h4>} */}
                 
             </div>
-            <div>
-              <Players userName={userName}/>
-            </div>
+            
             <div className="canvas-gameover">
               {/* <div className="canvas-placeholder"> */}
                 <Game 

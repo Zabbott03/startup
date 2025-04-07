@@ -1,9 +1,10 @@
 import React from 'react';
 
+import "./messages.css";
 import { GameEvent, GameNotifier } from './gameNotifier';
 
 
-export function Players(props) {
+export function Messages() {
 
   const [events, setEvent] = React.useState([]);
 
@@ -42,6 +43,6 @@ export function Players(props) {
   }
 
   return (
-      <div>{createMessageArray()}</div>
+      <div className="messages">{createMessageArray()}</div>
   );
 }

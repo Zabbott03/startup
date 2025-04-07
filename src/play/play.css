@@ -108,3 +108,7 @@ button {
 .canvas-gameover {
     position:relative;
 }
+
+.messages {
+    position:absolute;
+}
