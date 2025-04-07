@@ -2,6 +2,8 @@ import React from 'react';
 
 import './play.css';
 import { Game } from "./game"
+import { GameEvent, GameNotifier } from './gameNotifier';
+import { Players } from "./players.jsx";
 
 export function Play({userName, setRecentScores, setAllTimeScores}) {
 
@@ -54,6 +56,7 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
       if (hasGameOver && score > 0) {
         saveRecentScores(score);
         saveAllTimeScores(score);
+        GameNotifier.broadcastEvent(userName, GameEvent.End, {score})
       }
     }, [hasGameOver, score]);
 
@@ -61,6 +64,7 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
     const startGame = () => {
         setIsGameRunning(true);
         setHasGameOver(false);
+        GameNotifier.broadcastEvent(userName, GameEvent.Start, {});
     }
 
     const resetGame = () => {
@@ -89,6 +93,9 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
                 {players["player2"] && <h4>P2: {players["player2"].score} points</h4>}
                 {/* {player3 && <h4>P3: 6 points</h4>} */}
                 
+            </div>
+            <div>
+              <Players userName={userName}/>
             </div>
             <div className="canvas-gameover">
               {/* <div className="canvas-placeholder"> */}
