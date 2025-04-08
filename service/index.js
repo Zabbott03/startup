@@ -16,7 +16,6 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 apiRouter.post('/auth/create', async (req, res) => {
-    console.log("Create user request:", req.body);
 
     if (await findUser('name', req.body.username)) {
         res.status(409).send({error: "Username already taken"});
@@ -31,14 +30,12 @@ apiRouter.post('/auth/create', async (req, res) => {
 })
 
 apiRouter.post('/auth/login', async (req, res) => {
-    console.log("login beginning");
     const user = await findUser('name', req.body.username);
 
     if (user && await bcrypt.compare(req.body.password, user.password)) {
         user.token = uuid.v4()
         await DB.updateUser(user);
         setAuthCookie(res, user);
-        console.log("set cookie again");
         res.status(201).send();
     } else {
         res.status(401).send({error: "Invalid username or password"});

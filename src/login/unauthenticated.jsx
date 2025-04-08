@@ -11,7 +11,6 @@ export function UnauthenticatedLogin({ username, onLogin}) {
 
 
     async function loginUser() {
-        console.log("login user beginning")
 
         const response = await fetch("/api/auth/login", {
             method: "POST",
@@ -31,7 +30,6 @@ export function UnauthenticatedLogin({ username, onLogin}) {
       }
     
     async function createUser() {
-        console.log("create user beginning")
 
         const response = await fetch("/api/auth/create", {
             method: "POST",
@@ -49,7 +47,6 @@ export function UnauthenticatedLogin({ username, onLogin}) {
             localStorage.setItem('userName', userName);
         } else {
             const body = await response.json();
-            console.log(body);
             alert(body.error);
         }
         return;

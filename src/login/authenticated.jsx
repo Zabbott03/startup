@@ -10,12 +10,10 @@ export function AuthenticatedLogin({onLogout}) {
             method: "DELETE",
         })
         .catch(() => {
-            console.log("failed to logout")
         })
         .finally(() => {
             localStorage.removeItem("userName");
             onLogout()
-            console.log("logged out!")
         })
     }
   return (
