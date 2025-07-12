@@ -9,7 +9,7 @@ import { SnakeList } from "./snakeList";
 import { drawGameBoard } from "./gameboard";
 
 
-export function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, players, setPlayers, isMultiplayer }) {
+export function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, players, setPlayers, isMultiplayer, color, speed, gamemode }) {
     const canvasRef = useRef(null);
     const [fruit, setFruit] = React.useState(null);
     const snakeListRef = useRef(null);
@@ -32,10 +32,11 @@ export function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, pla
       const ctx = canvas.getContext('2d');
 
       drawGameBoard(canvas,ctx,board);
+
       if (Object.keys(players).length === 0) {
 
         const currentPlayers = {
-          player1: {x: 3, y: 7, color: "blue", score: 0},
+          player1: {x: 3, y: 7, color: color, score: 0}
         }
 
         if (isMultiplayer) {
@@ -58,6 +59,10 @@ export function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, pla
         if (isMultiplayer) {
         snakeListRef.current.snakes["player2"].direction = "left";
         }
+      }
+
+      if (snakeListRef.current && snakeListRef.current.snakes["player1"]) {
+        snakeListRef.current.snakes["player1"].color = color;
       }
 
 
@@ -86,7 +91,15 @@ export function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, pla
               ctx.clearRect(0,0,canvas.width,canvas.height);
               drawGameBoard(canvas,ctx,board);
               
-              snakeListRef.current.updateAll(inputs);
+              if (gamemode == "inverse") {
+                Object.keys(snakeListRef.current.snakes).forEach(playerId => {
+                  snakeListRef.current.snakes[playerId].inverseUpdate(inputs[playerId]);
+                })
+              }
+              else {
+                snakeListRef.current.updateAll(inputs);
+              }
+              
 
               const collisions = snakeListRef.current.moveAll()
 
@@ -94,31 +107,42 @@ export function Game({ isGameRunning, setHasGameOver, hasGameOver, setScore, pla
                 setHasGameOver(true);
               }
 
-              const fruitCollisions = snakeListRef.current.checkFruitCollisions(localFruit)
+              const fruitCollisions = snakeListRef.current.checkFruitCollisions(localFruit);
+
+              if (gamemode === "long") {
+                Object.values(snakeListRef.current.snakes).forEach(playerId => {
+                  playerId.grow();
+                })
+              }
 
               if (fruitCollisions.length > 0) {
 
-                fruitCollisions.forEach(playerId => {
-                  snakeListRef.current.snakes[playerId].grow();
-                  const updatedPlayers = { ...players}
-                  updatedPlayers[playerId].score = snakeListRef.current.snakes[playerId].score;
-                  setPlayers(updatedPlayers)
-                  setScore(players[playerId].score);
-                })
+                  fruitCollisions.forEach(playerId => {
+                    if (gamemode == "swap") {
+                      snakeListRef.current.snakes[playerId].reverseGrow();
+                    }
+                    else {
+                      snakeListRef.current.snakes[playerId].grow();
+                    }
+                    const updatedPlayers = { ...players}
+                    updatedPlayers[playerId].score = snakeListRef.current.snakes[playerId].score;
+                    setPlayers(updatedPlayers)
+                    setScore(players[playerId].score);
+                  })
 
-                localFruit = generateFruit(board, snakeListRef.current.snakes);
-                setFruit(localFruit)
+                  localFruit = generateFruit(board, snakeListRef.current.snakes);
+                  setFruit(localFruit);
               }
               
               snakeListRef.current.drawAll(canvas,ctx,board);
 
               drawFruit(canvas,ctx,board,localFruit);
               
-          }, 150);
+          }, speed);
 
         return () => clearInterval(interval);
       }
-    },[isGameRunning, hasGameOver, isMultiplayer, players]);
+    },[isGameRunning, hasGameOver, isMultiplayer, players, color]);
     
 
   

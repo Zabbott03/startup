@@ -112,3 +112,16 @@ button {
 .messages {
     position:absolute;
 }
+
+.gamemode-el {
+    width: 20 vh;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    border: 1px red solid;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+}

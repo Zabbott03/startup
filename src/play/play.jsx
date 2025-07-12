@@ -12,11 +12,11 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
     const [score, setScore] = React.useState(0);
     const [players, setPlayers] = React.useState({});
     const [isMultiplayer, setIsMultiplayer] = React.useState(false)
+    const [color, setColor] = React.useState("#0000ff");
+    const [snakeSpeed, setSnakeSpeed] = React.useState(150);
+    const [gamemode, setGamemode] = React.useState("classic");
+    const [gamemodeSelection, setGamemodeSelection] = React.useState(false);
 
-    // if (score > highScore) {
-    //   localStorage.setItem("highscore", JSON.stringify(score))
-    //   setHighScore(score)
-    // }
 
     async function saveRecentScores(newScore) {
       const date = new Date().toLocaleDateString()
@@ -53,7 +53,7 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
     }
 
     React.useEffect(() => {
-      if (hasGameOver && score > 0) {
+      if (hasGameOver && score > 0 && gamemode == "classic") {
         saveRecentScores(score);
         saveAllTimeScores(score);
         GameNotifier.broadcastEvent(userName, GameEvent.End, {score})
@@ -81,12 +81,14 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
       }
       return
     }
-
+    
+ 
   return (
     <main>
       <div className="messages">
         <Messages/>
       </div>
+      
         <div className="container">
             <div className="score-bar">
 
@@ -94,12 +96,11 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
                 <h4>{userName}: 0 points</h4>}
 
                 {players["player2"] && <h4>P2: {players["player2"].score} points</h4>}
-                {/* {player3 && <h4>P3: 6 points</h4>} */}
                 
             </div>
             
             <div className="canvas-gameover">
-              {/* <div className="canvas-placeholder"> */}
+
                 <Game 
                   isGameRunning={isGameRunning} 
                   setHasGameOver={setHasGameOver} 
@@ -108,18 +109,33 @@ export function Play({userName, setRecentScores, setAllTimeScores}) {
                   setPlayers={setPlayers}
                   players={players}
                   isMultiplayer={isMultiplayer}
+                  color={color}
+                  speed={snakeSpeed}
+                  gamemode={gamemode}
                   />
-              {/* </div> */}
+
 
               {hasGameOver && <div className="game-over">Game Over!</div>}
 
-            </div>
+              {gamemodeSelection && <div className="gamemode-el">
+                <input type="color" onChange={(e) => setColor(e.target.value)} value={color}></input>
+                <button onClick={() => setSnakeSpeed(200)} disabled={isGameRunning}>slow</button>
+                <button onClick={() => setSnakeSpeed(150)} disabled={isGameRunning}>medium</button>
+                <button onClick={() => setSnakeSpeed(100)} disabled={isGameRunning}>fast</button>
+                <button onClick={() => setGamemode("fruity")}>Fruit Mania</button>
+                <button onClick={() => setGamemode("Classic")}>Classic</button>
+                <button onClick={() => setGamemode("long")}>Long Snek</button>
+                <button onClick={() => setGamemode("swap")}>Swap</button>
+                <button onClick={() => setGamemode("inverse")}>Inverse</button>
+                </div>
+              }
 
-            {/* {hasGameOver && <div className="game-over">Game Over!</div>} */}
+            </div>
 
             <div>
               <button className="start-btn" onClick={startGame} disabled={isGameRunning}>Start Game</button>
               <button className="end-btn" onClick={resetGame} >Reset</button>
+              <button onClick={() => {setGamemodeSelection(!gamemodeSelection)}}>Change Gamemode</button>
             </div>
             <div className="multiplayer-toggle-div">
               <label htmlFor="multiplayer-toggle" className="multiplayer-label">Toggle Multiplayer</label>

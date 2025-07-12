@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  optimizeDeps: {
+    exclude: ['fsevents'],
+  },
   server: {
     proxy: {
       '/api': 'http://localhost:4000',

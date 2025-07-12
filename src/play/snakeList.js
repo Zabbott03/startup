@@ -52,6 +52,7 @@ export class SnakeList {
         })
         return collisions
     }
+    
 
     drawAll(canvas,ctx,board) {
         Object.values(this.snakes).forEach(snake => {
@@ -69,4 +70,5 @@ export class SnakeList {
         })
         return collisions;
     }
+
 }
